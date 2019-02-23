@@ -174,6 +174,7 @@ public class IssueUpdateDaoImpl extends BaseDaoImpl implements IssueUpdateDao{
 				sbIssue.append(" EMPLOYEE.EMPLOYEEID=ISSUE.ISSUECREATOR");
 				Query query=em.createNativeQuery(sbIssue.toString());
 				issues=query.getResultList();
+				System.out.println(issues);
 			}			
 			if(null!=issuePhase){							
 				sbColsComNotes=new StringBuffer(" SELECT COLISSCOMMENTSNOTES.CREATEDATE CREATEDATE");						
