@@ -1,0 +1,532 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cs="http://credit-suisse.com/csJsf"
+	xmlns:tp="http://credit-suisse.com/csJsf/tabbedPane">
+
+	<ui:composition template="../../template/page.xhtml">
+
+	<ui:define name="pageTitle">#{message['MICOS.Administration.issueTypeSetup.PageTitle.IssueTypeSetup']}
+	</ui:define>
+	<ui:define name="pageHeader">#{message['MICOS.Administration.issueTypeSetup.PageTitle.IssueTypeSetup']}		
+	</ui:define>
+	<ui:define name="mainContent" >
+		<h:form id="IssueTypeSetup"  binding="#{issueTypeSetupController.init}"
+			>
+			
+			<cs:messages />
+			
+			<div class="tabbed-container singlerow">
+			<div class="tabHeader">
+			<ul class="primary">
+				<li><a href="#" class="current">#{message['MICOS.Administration.issueTypeSetup.label.firstTab']}</a></li>
+				
+				<c:if test="#{issueTypeSetupController.helper.flagHelper.reportTab eq false}">
+					<li><span class="inactive">#{message['MICOS.Administration.issueTypeSetup.label.secondTab']}</span></li>
+				</c:if>
+				<c:if test="#{issueTypeSetupController.helper.flagHelper.reportTab eq true}">
+					<li><h:commandLink
+						action="#{issueTypeSetupController.openReportPropertiesTab}">#{message['MICOS.Administration.issueTypeSetup.label.secondTab']}</h:commandLink></li>
+				</c:if>			
+			</ul>
+			</div>
+
+			<div class="tabPage">		
+			<cs:container  id="setup" label="#{message['MICOS.Administration.issueTypeSetup.container.label.setup']}" 
+				containerKind="#{issueTypeSetupController.containerKind}" collapsed="false" >
+			
+				<table>
+				<tr>
+					<td width="30%">
+						<cs:fieldLabel id="issueTypeName" value="#{message['MICOS.Administration.issueTypeSetup.issueTypeName']}" required="true"/>
+					</td>
+					
+					<td width="70%" colspan="3">
+						
+						
+						<cs:fieldValue id="name" display="mutable" maxlength="80" size="97"
+											value="#{issueTypeSetupController.helper.issueTypeView.issueTypeName}" 
+											disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}"										
+											/>
+					</td>					
+				</tr>
+				<tr>
+					<td width="30%">
+						<cs:fieldLabel id="issueTypeDesc" value="#{message['MICOS.Administration.issueTypeSetup.issueTypeDescription']}" />
+					</td>
+					<td width="70%" colspan="3">
+						
+						
+						<h:inputTextarea  id="IssTypeDesc"
+											value="#{issueTypeSetupController.helper.issueTypeView.issueTypedesc}" 
+											disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}"										
+											rows="3" cols="100" 
+											></h:inputTextarea>
+					</td>					
+				</tr>
+				<tr>
+					<td width="30%">
+						<cs:fieldLabel id="stdAlone" value="#{message['MICOS.Administration.issueTypeSetup.checkbox.standAloneIssue']}" />
+					</td>
+					<td width="70%" colspan="3">						
+						<h:selectBooleanCheckbox id="stdAloneIss" 
+											class="standard"
+											value="#{issueTypeSetupController.helper.issueTypeView.standaloneIssue}" 
+											valueChangeListener="#{issueTypeSetupController.changeReportTab}" 
+											disabled="true"
+											onclick="submit()" layout="pageDirection"  />
+					</td>					
+				</tr>
+				<tr>
+					<td width="30%">
+						<cs:fieldLabel id="created" value="#{message['MICOS.Administration.issueTypeSetup.date.created']}" />
+					</td>
+					<td width="70%" colspan="3">	
+						<cs:fieldValue id="date" display="readonly" 
+											value="#{issueTypeSetupController.helper.issueTypeView.createDateUser}"
+											disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}" />	
+					</td>						
+				</tr>
+				<tr>
+					<td width="30%">
+						<cs:fieldLabel id="lastChng" value="#{message['MICOS.Administration.issueTypeSetup.date.lastChanged']}" />
+					</td>
+					<td width="50%">	
+						<cs:fieldValue display="readonly"  
+											value="#{issueTypeSetupController.helper.issueTypeView.lastupdateDateUser}"
+											disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}"/>	
+					</td>	
+					<td width="15%" align="right">	
+						<cs:fieldLabel id="avlbe" value="#{message['MICOS.Administration.issueTypeSetup.checkbox.available']}" />
+					</td>
+					<td align="center">	
+						<h:selectBooleanCheckbox id="available" 
+											value="#{issueTypeSetupController.helper.issueTypeView.available}"
+											class="standard"
+											disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}"  />
+					</td>					
+				</tr>
+			</table>
+		</cs:container>
+			<cs:container  id="prcAttr" label="#{message['MICOS.Administration.issueTypeSetup.container.label.issueProcessAttributes']}" containerKind="#{issueTypeSetupController.containerKind}" collapsed="true">
+			
+				<table width="80%">
+					<tr>
+						<td></td>
+						<td >
+										
+							<h:selectBooleanCheckbox id="defaultPhases" 
+												value="#{issueTypeSetupController.helper.issueTypeView.defaultNoOfPhases}"  class="standard"
+												valueChangeListener="#{issueTypeSetupController.changeDefaultPhases}"
+												disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.defaultPhasesDisabled }"  
+												onclick="submit()" layout="pageDirection" />
+						</td>
+						<td>
+							<cs:fieldLabel id="defaultPhases1" value="#{message['MICOS.Administration.issueTypeSetup.checkbox.defaultPhases']}" />
+						</td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						
+						<td >
+							<h:graphicImage 
+								alt="#{message['MICOS.Administration.issueTypeSetup.help.defaultPhases']}"
+								id="image01" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+						</td>
+						<td >
+							<cs:fieldValue id="DefaultPhases" display="mutable" 
+												value="#{issueTypeSetupController.helper.issueTypeView.dfltPhases}" size="5"
+												disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.defaultPhasesTextboxDisabled}" />
+						</td>
+					
+						<td>
+							<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.maxvalue']}" />
+						</td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>					
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>					
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>					
+						
+					</tr>
+					<tr>
+					<td></td>
+						<td>	
+							 <h:selectBooleanCheckbox id="earlyAction"  
+												value="#{issueTypeSetupController.helper.issueTypeView.enforceEarlyActionDueDate}"  class="standard"
+												valueChangeListener="#{issueTypeSetupController.changeEnforceEarlyAction}"
+												disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.enforceEarlyActionDisabled}"
+												onclick="submit()" layout="pageDirection" />
+						</td>
+						<td >
+							<cs:fieldLabel id="earlyAction1" value="#{message['MICOS.Administration.issueTypeSetup.checkbox.earlyAction']}" />
+						</td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>	
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>					
+						<td >
+							<h:graphicImage 
+								alt="#{message['MICOS.Administration.issueTypeSetup.help.earlyAction']}"
+								id="image02" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+						</td>
+						<td >
+							<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.endOfPhase']}" />					
+						</td>
+						<td >
+							<cs:fieldValue display="mutable"
+												value="#{issueTypeSetupController.helper.issueTypeView.earlyActionDueDatePhase}" size="5"
+												disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.enforceEarlyTextboxDisabled}"  />
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td >	
+							
+							<h:selectBooleanCheckbox id="limitNext"  
+											value="#{issueTypeSetupController.helper.issueTypeView.limitNextPhaseDueDate}"  class="standard"
+											valueChangeListener="#{issueTypeSetupController.helper.changeLimitNextPhase}"
+											disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.limitNextPhaseDisabled}" 
+											onclick="submit()" layout="pageDirection" /> 
+						</td>
+						<td >
+							<cs:fieldLabel id="limitNext1" value="#{message['MICOS.Administration.issueTypeSetup.checkbox.limitNextPhase']}" />
+						</td>						
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td>
+							<h:graphicImage 
+								alt="#{message['MICOS.Administration.issueTypeSetup.help.limitNextPhase']}"
+								id="image03" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+						</td>
+						<td >
+							<cs:fieldValue display="mutable" 
+												value="#{issueTypeSetupController.helper.issueTypeView.nextPhaseDueDateDuration}" size="5"
+												disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.limitNextPhaseTextboxDisabled}" />
+						</td>
+						<td>
+							<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.months']}" />
+						</td>
+					</tr>
+					
+				</table>
+			</cs:container>
+			<cs:container  id="remndrs" label="#{message['MICOS.Administration.issueTypeSetup.container.label.issueUpdates']}" containerKind="#{issueTypeSetupController.containerKind}" collapsed="true">
+			
+			<table>
+				<tr>
+					<td></td>
+					<td width="1%">
+				
+						<h:selectBooleanCheckbox id="updt"
+												value="#{issueTypeSetupController.helper.issueTypeView.updateRequiredView.complete}" 
+												valueChangeListener="#{issueTypeSetupController.helper.changeUpdate}" 
+												onclick="submit()" layout="pageDirection" class="standard"
+												disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}" 
+												 />
+					</td>
+					<td width="7%">
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.updateRequired']}" />
+					</td>
+					<td width="2%">
+						<h:graphicImage 
+							alt="#{message['MICOS.Administration.issueTypeSetup.help.updateRequired']}"
+							id="image04" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+					</td>
+					<td width="5%">
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.every']}" />
+					</td>
+					<td width="5%">
+						<cs:fieldValue 
+						id="updateText"
+						value="#{issueTypeSetupController.helper.issueTypeView.updateRequiredView.reminderText}"
+						disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.updateRequiredClicked}"
+						display="mutable" size="10"/>
+					</td>
+					<td width="2%"></td>
+					<td width="5%">
+						<h:selectOneMenu id="periodType" value="#{issueTypeSetupController.helper.issueTypeView.updateRequiredView.selectedperiodType}"
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.updateRequiredClicked}" style="width:15em;">
+								 <f:selectItems id="UpdateList" value="#{issueTypeSetupController.helper.issueTypeView.updateRequiredView.periodType}" /> 
+						</h:selectOneMenu>
+					</td>
+					<td width="1%"></td>
+					<td width="8%">
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.none']}" />
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td width="1%">				
+						<h:selectBooleanCheckbox id="rmndr" 
+							value="#{issueTypeSetupController.helper.issueTypeView.reminderView.complete}"  class="standard"
+							valueChangeListener="#{issueTypeSetupController.helper.changeReminder}" 
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}" 
+							onclick="submit()" layout="pageDirection"
+							/>
+					</td>
+					<td width="7%">
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.reminder']}" />
+					</td>
+					<td width="2%">
+						<h:graphicImage 
+							alt="#{message['MICOS.Administration.issueTypeSetup.help.reminder']}"
+							id="image05" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+					</td>
+					<td width="5%">
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.once']}" />
+					</td>
+					<td width="5%">
+						<cs:fieldValue 
+							id="remindertext1"
+							value="#{issueTypeSetupController.helper.issueTypeView.reminderView.reminderText}"
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.reminderClicked}"
+							display="mutable"  size="10" />
+					</td>
+					<td width="2%"></td>
+					<td width="5%">
+						<h:selectOneMenu id="periodType1" value="#{issueTypeSetupController.helper.issueTypeView.reminderView.selectedperiodType}"
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.flagHelper.reminderClicked}" style="width:15em;">
+								 <f:selectItems id="rmdrList" value="#{issueTypeSetupController.helper.issueTypeView.reminderView.periodType}" /> 
+						</h:selectOneMenu>
+					</td>
+					<td width="1%"></td>
+					<td width="8%">
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.beforeDeadline']}" />
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td width="1%">					
+						<h:selectBooleanCheckbox id="wrng"
+							class="standard"
+							value="#{issueTypeSetupController.helper.issueTypeView.warningView.complete}" 
+							valueChangeListener="#{issueTypeSetupController.helper.changeWarning}"
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}" 
+							 onclick="submit()" layout="pageDirection" />
+					</td>
+					<td width="7%">  
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.warning']}" />
+					</td>
+					<td width="2%">
+						<h:graphicImage 
+							alt="#{message['MICOS.Administration.issueTypeSetup.help.warning']}"
+							id="image06" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+					</td>
+					<td width="5%">
+						<h:selectOneMenu id="periodType3" value="#{issueTypeSetupController.helper.issueTypeView.warningView.selectedDaysIssue}"
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.warningClicked}">
+								 <f:selectItems id="evryList" value="#{issueTypeSetupController.helper.issueTypeView.warningView.listofDaysIssue}" /> 
+						</h:selectOneMenu>
+					</td>
+					<td width="5%">
+						<cs:fieldValue 
+							id="wrngText"
+							value="#{issueTypeSetupController.helper.issueTypeView.warningView.reminderText}"
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.warningClicked}"
+							display="mutable" size="10" />
+					</td>
+					<td width="2%"></td>
+					<td width="5%">
+						<h:selectOneMenu id="periodType4" value="#{issueTypeSetupController.helper.issueTypeView.warningView.selectedperiodType}"
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType or issueTypeSetupController.helper.warningClicked}" style="width:15em;">
+								 <f:selectItems id="wrngList" value="#{issueTypeSetupController.helper.issueTypeView.warningView.periodType}" /> 
+						</h:selectOneMenu>
+					<td width="1%"></td>
+					</td>
+					<td width="8%">
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.afterDeadline']}" />
+					</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td ></td>
+					<td width="2%">
+						<h:selectBooleanCheckbox id="phseCmpltn" 
+							class="standard"
+							value="#{issueTypeSetupController.helper.issueTypeView.phaseCompletionEmail}"
+							disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}" />
+					</td>
+					<td width="80%">  
+						<cs:fieldValue display="readonly" value="#{message['MICOS.Administration.issueTypeSetup.phaseCompletion']}" />
+					</td>
+				</tr>				
+			</table>
+			</cs:container>
+			<cs:container id="groupAdmins"  label="#{message['MICOS.Administration.issueTypeSetup.container.label.issueGroupAdministrators']}" containerKind="#{issueTypeSetupController.containerKind}" collapsed="#{issueTypeSetupController.helper.groupAdminCollapse}">
+				<cs:baseTable id="issGrpAdmin"
+								value="#{issueTypeSetupController.helper.issueTypeView.groupAdmins}"
+								backingBean="#{issueTypeSetupController}" var="item" 						
+								rendered = "true" >
+								<cs:column width="40%" id="pid"																	 
+									header="#{message['MICOS.Administration.issueTypeSetup.groupAdmin.id']}"
+									fieldName="pid"
+									backingBean="#{issueTypeSetupController}" >
+									<h:outputText value="#{item.pid}" />
+									<h:outputText value="&#160;" />
+								</cs:column>
+								<cs:column width="40%" id="dept" 
+									header="#{message['MICOS.Administration.issueTypeSetup.groupAdmin.dept']}" 
+									fieldName="dept"
+									backingBean="#{issueTypeSetupController}" >
+									<h:outputText value="#{item.instradierung}" />	
+									<h:outputText value="-" />	
+									<h:outputText value="#{item.department}" />
+									<h:outputText value="&#160;" />
+								</cs:column>
+								<cs:column header="&#160;" width="5%" id="dlt"
+									backingBean="#{issueTypeSetupController}" >
+									<h:commandLink id="grpAdminDeleteLink"
+										action="#{issueTypeSetupController.deleteGrpAdmin}"
+										disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}" 
+										onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+										<f:param name="selectedEmp" 
+											value="#{item.tempId}"/>											 
+										<h:graphicImage id="image07" alt="Remove" 
+											url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" 
+											rendered="true"
+											/>
+									</h:commandLink>
+								
+								</cs:column>
+				</cs:baseTable>
+				<div class="toolbar">
+					<h:commandButton						
+										id="addIssGrp"
+										value="#{message['MICOS.Administration.issueGroupAdmin.button.add']}"
+										styleClass="button" 
+										action="#{issueTypeSetupController.addGroupAdmin}" 
+										disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}" />
+				</div>		
+			</cs:container>
+			<cs:container  id="codingGroup" label="#{message['MICOS.Administration.issueTypeSetup.container.label.codingGroup']}" containerKind="#{issueTypeSetupController.containerKind}" collapsed="#{issueTypeSetupController.helper.codingGroupCollapse}">
+				<cs:baseTable id="codingGrp" 							
+								value="#{issueTypeSetupController.helper.issueTypeView.codingGroup}"
+								backingBean="#{issueTypeSetupController}" var="item" 					
+								rendered = "true" >
+								<cs:column width="40%" id="pid1" 
+									header="#{message['MICOS.Administration.issueTypeSetup.codingGroupId']}" 								
+									fieldName="pid1"
+									backingBean="#{issueTypeSetupController}" >
+									<h:outputText value="#{item.pid}" id="pid" />			
+								</cs:column>
+								<cs:column width="40%" id="dept1" 
+									header="#{message['MICOS.Administration.issueTypeSetup.codingGruop.dept']}" 
+									 fieldName="dept1"
+									backingBean="#{issueTypeSetupController}" >
+									<h:outputText value="#{item.instradierung}" />	
+									<h:outputText value="-" />
+									<h:outputText value="#{item.department}" />			
+								</cs:column>
+								<cs:column header="&#160;" width="5%" id="dlt1"
+									backingBean="#{issueTypeSetupController}" >
+									<h:commandLink id="grpCodingGrpLink"
+										action="#{issueTypeSetupController.deleteCodingGroup}"
+										disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}" 
+										onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+										<f:param name="selectedEmp" 
+											value="#{item.tempId}"/>											 
+										<h:graphicImage id="image07" alt="Remove" 
+											url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" 
+											rendered="true"
+											/>
+									</h:commandLink>
+								
+								</cs:column>
+				</cs:baseTable>
+				<div class="toolbar">
+					<h:commandButton
+									id="addCode"						
+									value="#{message['MICOS.Administration.codingGroup.button.add']}"									
+									action="#{issueTypeSetupController.addCodingGroup}" 
+									styleClass="button" rendered="true" 
+									disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}"/>
+				</div>			
+			</cs:container>
+			<div class="toolbar"><c:choose>        
+                        <c:when test="#{issueTypeSetupController.helper.flagHelper.required_display_issueType eq 'false'}">
+                              <h:commandButton                                
+                                                      styleClass="button" id="coTagId5"
+                                                      action="#{issueTypeSetupController.cancelIssueType}" 
+                                                      onclick="if (!confirm('Are you sure you want to cancel? All unsaved changes will be lost. Cancellation cannot be undone')) return false"
+                                                      value="#{message['MICOS.AdministratorIssueTypes.issueTypeSetup.button.cancel']}"
+                                                      />
+                        </c:when>
+                        <c:otherwise test="#{issueTypeSetupController.mode eq 'true'}">
+                              <h:commandButton                                
+                                                      styleClass="button" id="coTagId5"
+                                                      action="#{issueTypeSetupController.cancelIssueType}" 
+                                                      onclick="submit()"
+                                                      value="#{message['MICOS.AdministratorIssueTypes.issueTypeSetup.button.cancel']}"
+                                                      />
+                        </c:otherwise>
+						</c:choose>
+						<c:choose>			
+						<c:when test="#{issueTypeSetupController.mode eq 'create'}">
+							<h:commandButton						
+										styleClass="button" id="coTagId6"	
+										action="#{issueTypeSetupController.saveIssueType}" 								 						
+										value="#{message['MICOS.adinistratorIssueTypes.issueTypeSetup.button.save']}"
+										disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}"/>
+						</c:when>
+						<c:otherwise test="#{issueTypeSetupController.mode eq 'edit'}">
+							<h:commandButton						
+										styleClass="button" id="coTagId7"	
+										action="#{issueTypeSetupController.saveIssueType}" 								 						
+										value="#{message['MICOS.adinistratorIssueTypes.issueTypeSetup.button.save']}"
+										disabled="#{issueTypeSetupController.helper.flagHelper.required_display_issueType}"/>
+						</c:otherwise> 
+						</c:choose>
+						
+							
+			</div>
+			</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

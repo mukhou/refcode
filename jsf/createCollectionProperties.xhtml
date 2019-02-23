@@ -1,0 +1,701 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:cs="http://credit-suisse.com/csJsf"
+	xmlns:mic="http://credit-suisse.com/micJsf">
+
+   <cs:subForm id="collectionPropertiesForm">
+	<!-- SETUP START -->
+
+	<cs:container id="setupContainer"
+		label="#{message['MICOS.Collections.CreateCollection.Label.Setup']}"
+		containerKind="#{collectionProperties.containerKind}">
+
+		<table>
+			<tr>
+
+				<td width="1%" ></td>
+				<td align="left" width="11%"><cs:fieldLabel id="collectionName"
+					label="#{message['MICOS.Collections.CreateCollection.Setup.Label.Name']} "
+					required="true" only="label" /></td>
+				<td width="3%" align="center"></td>
+
+				<td width="20%"><h:inputText id="collname"
+					value="#{collectionProperties.collectionView.setupDetails.name}"
+					maxlength="20" size="25"
+					disabled="#{collectionProperties.helper.setupClassReadOnly}" /></td>
+				<td width="65%"><h:outputText value="(e.g CS-2007-35)" /></td>
+
+
+			</tr>
+
+			<tr>
+				<td width="1%" ></td>
+				<td align="left" width="11%"><cs:fieldLabel id="collectionType"
+					label="#{message['MICOS.Collections.CreateCollection.Setup.Label.Type']} "
+					required="true" only="label" /></td>
+				<td width="3%" align="center"><h:graphicImage id="image01"
+					alt="#{message['MICOS.Collections.CreateCollection.Setup.help.Type']}"
+					url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" /></td>
+
+				<td width="20%"><h:selectOneMenu id="selectedCollectionType" style="width:100%;" 
+					value="#{collectionProperties.collectionView.setupDetails.type.code}" disabled="true">
+					<f:selectItem id="collectionTypeList" itemLabel="#{collectionProperties.collectionView.setupDetails.type.code}" itemValue="#{collectionProperties.collectionView.setupDetails.type.description}"/>
+				</h:selectOneMenu></td>
+
+
+				<td width="65%" align="center"><h:graphicImage id="image30"
+					alt="#{message['MICOS.Collections.CreateCollection.help.ReportProcessAttributes']}"
+					url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" /> <h:outputText
+					value="&#160;" /> <h:outputText value="&#160;" /> <h:outputText
+					value="&#160;" /> <h:outputText value="&#160;" /> <h:commandButton
+					id="reprtAttributes"
+					value="#{message['MICOS.Collections.CreateCollection.Button.ReportProcessAttributes']}"
+					onclick="return window.showModalDialog('/micos/micosjsf/issues/reportProcessAttributes.jsf','','dialogHeight:20em;dialogWidth:19em;scroll:no;status:no;help:no;close:no');"
+					styleClass="button"
+					 disabled="#{collectionProperties.helper.flagDisplayReport}" />
+				</td>
+			</tr>
+			<tr>
+				<td width="1%"></td>
+				<td align="left" width="20%"><cs:fieldLabel id="issueCrtGrp"
+					label="#{message['MICOS.Collections.CreateCollection.Setup.Label.IssueCreatorGroup']} "
+					required="true" only="label" /></td>
+					<td width="3%" align="center"><h:graphicImage 
+					alt="#{message['MICOS.Collections.CreateCollection.Setup.help.IssueCreatorGroup']}"
+					url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" /></td>
+				
+				<td width="20%"><h:selectOneMenu id="selectedissueCrtrGrp" style="width:100%;"
+					value="#{collectionProperties.collectionView.setupDetails.selectedIssueCreatorGroup}"
+					disabled="#{collectionProperties.helper.flagDisplay or collectionProperties.helper.setupClassReadOnly}"
+					valueChangeListener="#{collectionProperties.changedIssueGroup}"
+										onchange="submit()">
+					<f:selectItems id="issueCrtGrpList"
+						value="#{collectionProperties.helper.issueCreatorGroupList}" />
+				</h:selectOneMenu></td>
+			</tr>
+
+			<tr>
+				<td width="1%"></td>
+				<td align="left" width="11%"><cs:fieldLabel
+					id="collectionTitle"
+					label="#{message['MICOS.Collections.CreateCollection.Setup.Label.Title']} "
+					required="true" only="label" /></td>
+				<td width="3%" align="center"><h:graphicImage id="image02"
+					alt="#{message['MICOS.Collections.CreateCollection.Setup.help.Title']}"
+					url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" /></td>
+
+				<td colspan="2"><h:inputTextarea id="collTitle"
+					value="#{collectionProperties.collectionView.setupDetails.title}"
+					rows="3" cols="100" maxlength="2000"
+					disabled="#{collectionProperties.helper.setupClassReadOnly}" /></td>
+			</tr>
+			<tr>
+				<td width="1%"></td>
+				<td align="left" width="11%"><cs:fieldLabel id="reportSummary"
+					label="#{message['MICOS.Collections.CreateCollection.Setup.Label.Summary']} "
+					 only="label" /></td>
+				<td width="3%" align="center"><h:graphicImage id="image35"
+					alt="#{message['MICOS.Collections.CreateCollection.Setup.help.Summary']}"
+					url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" /></td>
+
+				<td colspan="2"><h:inputTextarea id="reportSmmry"
+					value="#{collectionProperties.collectionView.setupDetails.summary}"
+					rows="3" cols="100" maxlength="2000"
+					disabled="#{collectionProperties.helper.setupClassReadOnly}" /></td>
+			</tr>
+		
+			<tr>
+						<td width="1%"></td>
+						<td align="left" width="11%"><cs:fieldLabel id="collectionDate"
+							label="#{message['MICOS.Collections.CreateCollection.PeriodIssueDate.Label.Issued']} "
+							required="true" /></td>
+						<td width="3%"></td>
+						<td colspan="2"><mic:dateField id="calenderDate" label=""
+							value="#{collectionProperties.collectionView.setupDetails.issuedDate}"
+							dateType="javautil" datePicker="true"
+							display="#{collectionProperties.helper.requiredDisplaySetUp}" /></td>
+					
+			</tr>
+		
+			<tr>
+				<td width="1%"></td>
+				<td align="left" width="11%"><cs:fieldLabel
+					id="collectionPeriodFrom"
+					label="#{message['MICOS.Collections.CreateCollection.PeriodIssueDate.Label.Period(From)']}"
+					only="label" /></td>
+				<td width="3%" align="center"></td>
+				<td align="left" width="1%">
+
+				<h:selectOneMenu id="selectedMonth"
+					value="#{collectionProperties.collectionView.setupDetails.periodFromMonth}"
+					disabled="#{collectionProperties.helper.setupClassReadOnly}">
+					<f:selectItems id="monthList"
+						value="#{collectionProperties.helper.periodMonths}" />
+				</h:selectOneMenu><h:outputText value="&#160;" />
+				<h:selectOneMenu id="selectedYear"
+					value="#{collectionProperties.collectionView.setupDetails.periodFromYear}"
+					disabled="#{collectionProperties.helper.setupClassReadOnly}">
+					<f:selectItems id="yearList"
+						value="#{collectionProperties.helper.periodYears}" />
+				</h:selectOneMenu></td>
+				
+				<td width="1%"><cs:fieldLabel id="collectionPeriodTo"
+					label="#{message['MICOS.Collections.CreateCollection.PeriodIssueDate.Label.Period(To)']}"
+					only="label" />
+				<h:selectOneMenu id="selectedMonthTo"
+					value="#{collectionProperties.collectionView.setupDetails.periodToMonth}"
+					disabled="#{collectionProperties.helper.setupClassReadOnly}">
+					<f:selectItems id="monthListTo"
+						value="#{collectionProperties.helper.periodMonths}" />
+				</h:selectOneMenu>
+				<h:outputText value="&#160;" />
+				<h:selectOneMenu id="selectedYearTo"
+					value="#{collectionProperties.collectionView.setupDetails.periodToYear}"
+					disabled="#{collectionProperties.helper.setupClassReadOnly}">
+					<f:selectItems id="yearListTo"
+						value="#{collectionProperties.helper.periodYears}" />
+				</h:selectOneMenu>
+				</td>
+			</tr>
+
+		</table>
+	</cs:container>
+	<!-- SETUP END -->
+	<!-- CLASSIFICATION DETAILS START -->
+
+	<cs:container id="classificationContainer"
+		label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetails.Title']}"
+		containerKind="#{collectionProperties.containerKind}"
+		collapsed="#{collectionProperties.flagHelper.contCollapsed}"
+		>
+		<h:panelGrid columns="2" valign="top">
+			<h:panelGroup>
+				<table>
+					<tr valign="top">
+						<td colspan="2" align="left"><b><cs:field
+							id="reportRating"
+							label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.ReportRating']}" /></b>
+						</td>
+
+					</tr>
+					<tr>
+						<td align="left" width="7%"><cs:field id="riskRating"
+							label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.RiskRating']}" />
+						</td>
+						<td align="right" width="40%"><h:selectOneMenu
+							id="selectedRiskRating"
+							value="#{collectionProperties.collectionView.classificationDetails.riskRating.code}"
+							disabled="#{collectionProperties.helper.setupClassReadOnly}"
+							style="width:25em;">
+							<f:selectItems id="riskRatingList"
+								value="#{collectionProperties.helper.riskRatings}" />
+						</h:selectOneMenu></td>
+						<td><h:outputText value="&#160;" /></td>
+						<td align="left" width="7%"><cs:field
+							label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.Materiality']}" />
+						</td>
+						<td align="center" width="40%"><h:selectOneMenu
+							id="selectedMaterialityStatus"
+							value="#{collectionProperties.collectionView.classificationDetails.materiality.code}"
+							disabled="#{collectionProperties.helper.setupClassReadOnly}"
+							style="width:25em;">
+							<f:selectItems id="materialityStatusList"
+								value="#{collectionProperties.helper.materialityList}" />
+						</h:selectOneMenu></td>
+					</tr>
+
+				</table>
+			</h:panelGroup>
+		</h:panelGrid>
+		<hr></hr>
+		<h:panelGroup>
+			<table>
+				<tr valign="top">
+					<td colspan="2" align="left"><b><cs:field id="reportScope"
+						label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.ReportScope']}" /></b>
+					</td>
+
+				</tr>
+				<tr>
+					<td><h:outputText value="&#160;" /></td>
+
+
+					<td><b><cs:field id="businessdivisions"
+						label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.Businessdivisions']}"></cs:field></b>
+					</td>
+					<td><b><cs:field id="regions"
+						label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.Regions']}"></cs:field></b>
+					</td>
+					<td><b><cs:field id="sharedServices"
+						label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.SharedServices']}"></cs:field></b>
+					</td>
+				</tr>
+				<tr>
+					<td><h:outputText value="&#160;" /></td>
+
+					<td valign="top"><h:selectManyCheckbox
+						id="selectedBusinessDivisions"
+						value="#{collectionProperties.helper.selecedBusDivIds}"
+						layout="pageDirection" class="standard"
+						disabled="#{collectionProperties.helper.setupClassReadOnly}">
+						<f:selectItems id="businessDivisionsList"
+							value="#{collectionProperties.helper.listOfbusinessDivisions}" />
+					</h:selectManyCheckbox></td>
+					<td valign="top"><h:selectManyCheckbox
+						id="selectedListOfregions"
+						value="#{collectionProperties.helper.selecedRegionIds}"
+						layout="pageDirection" class="standard"
+						disabled="#{collectionProperties.helper.setupClassReadOnly}">
+						<f:selectItems id="listOfregionsList"
+							value="#{collectionProperties.helper.listOfregions}" />
+					</h:selectManyCheckbox></td>
+					<td valign="top"><h:selectManyCheckbox
+						id="selectedListOfservices"
+						value="#{collectionProperties.helper.selecedServicesIds}"
+						layout="pageDirection" class="standard"
+						disabled="#{collectionProperties.helper.setupClassReadOnly}">
+						<f:selectItems id="listOfservicesList"
+							value="#{collectionProperties.helper.listOfservices}" />
+					</h:selectManyCheckbox></td>
+				</tr>
+			</table>
+		</h:panelGroup>
+
+		<hr></hr>
+		<div class="simple-container-micos">
+			<cs:container id="detailReportScopeContainer"
+				label="#{message['MICOS.Collections.CollectionProperties.DetailReport.Title']}"
+				style="width:730px;" containerKind="white"
+				containerState="#{csContainerStateBean['ControlPropertie_1']}">
+				<br></br>
+
+				<cs:baseTable id="detailReportList" var="item"
+					value="#{collectionProperties.collectionView.classificationDetails.detailReportList}"
+					backingBean="#{collectionProperties}"
+					divClass="fixheight vertical-scrollable-table"  
+					paginator="true" rendered="true">
+					<cs:column width="25%" id="hiearchyName" styleClass="text-left"
+						header="#{message['MICOS.Collections.CollectionProperties.Hierarchy.Title']}"
+						fieldName="hiearchyName" backingBean="#{collectionProperties}">
+						<h:outputText value="#{item.hiearchyName}" />
+					</cs:column>
+					<cs:column width="25%" id="hiearchyElementName"
+						styleClass="text-left"
+						header="#{message['MICOS.Collections.CollectionProperties.HierarchyElement.Title']}"
+						fieldName="hiearchyElementName"
+						backingBean="#{collectionProperties}">
+						<h:outputText value="#{item.hiearchyElementName}" />
+					</cs:column>
+					<cs:column width="25%" id="scopeAoROwnerName"
+						styleClass="text-left"
+						header="#{message['MICOS.Collections.CollectionProperties.Owner.Title']}"
+						fieldName="scopeAoROwnerName"
+						backingBean="#{collectionProperties}">
+						<h:outputText value="#{item.scopeAoROwnerName}" />
+					</cs:column>
+					<cs:column  header="&#160;" id="collectionDelete" fieldName="delete"
+						width="10%" styleClass="text-right"
+						backingBean="#{collectionProperties}">
+						<c:if
+					test="#{collectionProperties.helper.requiredDisplayOthers eq 'mutable'}">
+						<h:commandLink id="issueDeleteLink"
+							action="#{collectionProperties.deleteAor}"
+							onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+							<f:param name="selectedContact" value="#{item.tempId}" />
+							<h:graphicImage id="image03" alt="Remove"
+								url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" rendered="true" />
+						</h:commandLink>
+						</c:if>
+					</cs:column>
+				</cs:baseTable>
+				<div class="toolbar"><h:commandButton id="addButton"
+					value="#{message['MICOS.Collections.CollectionProperties.Button.Add']}"
+					styleClass="button" rendered="true"
+					action="#{collectionProperties.flagHelper.addAor}" 
+					disabled="#{collectionProperties.helper.contactDistAttachReadOnly}" /></div>
+			</cs:container>
+		 </div> 
+		<hr></hr>
+		<b><cs:field id="issueClassification"
+			label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.ReportClassification']}"></cs:field></b>
+		<br></br>
+		<br></br>
+		<table>
+			<tr>
+				<td><h:outputText value="&#160;" /></td>
+				<td><h:outputText value="&#160;" /></td>
+				<td width="28%" align="left"><cs:field id="significantRepRisk"
+					label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.SignificantReputationalRiskIssues']}"></cs:field>
+				</td>
+				<td><h:selectBooleanCheckbox id="repRiskCheckbox"
+					value="#{collectionProperties.collectionView.classificationDetails.significantRepRisk}"
+					class="standard"
+					disabled="#{collectionProperties.helper.codingRequiredDisabled or collectionProperties.helper.setupClassReadOnly}" />
+				</td>
+
+			</tr>
+			<tr>
+				<td><h:outputText value="&#160;" /></td>
+				<td><h:outputText value="&#160;" /></td>
+				<td width="28%" align="left"><cs:field
+					id="significantRepeatIssues"
+					label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.SignificantRepeatIssues']}"></cs:field>
+				</td>
+				<td><h:selectBooleanCheckbox id="repeatIssuesCheckbox"
+					value="#{collectionProperties.collectionView.classificationDetails.significantRepeatIssues}"
+					class="standard"
+					disabled="#{collectionProperties.helper.codingRequiredDisabled or collectionProperties.helper.setupClassReadOnly}" />
+				</td>
+
+			</tr>
+
+			<tr>
+				<td><h:outputText value="&#160;" /></td>
+				<td><h:outputText value="&#160;" /></td>
+				<td align="right" width="28%"><cs:field
+					label="#{message['MICOS.Collections.CollectionProperties.ClassificationDetailsTab.SOXRelevantMatters']}" />
+				</td>
+				<td><h:selectOneMenu id="soxRelevantMatters"
+					value="#{collectionProperties.collectionView.classificationDetails.soxRelevantMatter.code}"
+					disabled="true"
+					style="width:25em;">
+					<!--AR 2.1
+					disabled="#{collectionProperties.helper.codingRequiredDisabled or collectionProperties.helper.setupClassReadOnly}" 
+					-->
+					<f:selectItems value="#{collectionProperties.helper.listSoxRelevant}" />
+				</h:selectOneMenu></td>
+			</tr>
+		</table>
+		<br></br>
+	</cs:container>
+
+	<!-- CONTACT START -->
+
+
+	<cs:container id="contactsContainer"
+		label="#{message['MICOS.Collections.CollectionProperties.ContactsTab.Title']}"
+		containerKind="#{collectionProperties.helper.containerKindone}"
+		rendered ="#{collectionProperties.displayCodingsetup}" 
+		collapsed="#{collectionProperties.flagHelper.contCollapsed}"
+		containerState="#{csContainerStateBean['codingSetup']}"
+		>
+		<cs:field id="contactTitle"
+			label="#{message['MICOS.Collections.CollectionProperties.ContactsTab.PageTitle']}"></cs:field>
+		<br></br>
+		<br></br>
+		<cs:baseTable id="contacts" label="" var="item"
+			value="#{collectionProperties.collectionView.contacts}"
+			containerType="type5" backingBean="#{collectionProperties}"
+			paginator="true" columnclasses="word_break_column">
+			<cs:column width="15%"
+				header="#{message['MICOS.Collections.CollectionProperties.ContactsTab.DataTable.Header.PID']}">
+				<h:outputText value="#{item.pid}" id="pid" />
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column width="35%"
+				header="#{message['MICOS.Collections.CollectionProperties.ContactsTab.DataTable.Header.Name']}">
+
+				<h:outputLink id="contactHeaderLink"
+					onclick="openPopup(this.href,'_blank', 'intra_large'); return false;"
+					value="http://my.csintra.net/mypage/#{item.pid}">
+					<h:outputText value="#{item.firstName} #{item.surName}" id="name" />
+				</h:outputLink>
+				<h:outputText value="&#160;" />
+			</cs:column>
+
+			<cs:column width="20%"
+				header="#{message['MICOS.Collections.CollectionProperties.ContactsTab.DataTable.Header.OrgUnit']}">
+				<h:outputText value="#{item.instradierung}" id="OrgUnit" />
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column width="20%" styleClass="text-align:center"
+				header="#{message['MICOS.Collections.CollectionProperties.ContactsTab.DataTable.Header.NotifyByEmail']}">
+				<h:selectBooleanCheckbox id="notifyByEmail" value="#{item.selected}" 
+				class="standard"
+				disabled="#{collectionProperties.helper.contactDistAttachReadOnly}"/>
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column header="&#160;" fieldName="delete"
+				backingBean="#{collectionProperties}" width="10%">
+				<c:if
+					test="#{collectionProperties.helper.requiredDisplayOthers eq 'mutable'}">
+					<h:commandLink id="removeContact"
+						action="#{collectionProperties.deleteContact}"
+						onclick="if (!confirm('Are you sure you want to delete this record?')) return false"
+						rendered="#{item.deleteAllowed}">
+						<f:param name="selectedContact" value="#{item.tempId}" />
+						<h:graphicImage id="image09" alt="Remove"
+							url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" />
+					</h:commandLink>
+				</c:if>
+				<h:outputText value="&#160;" />
+			</cs:column>
+		</cs:baseTable>
+		<div class="toolbar"><h:commandButton id="searchEmployee"
+			action="#{collectionProperties.searchEmployee}"
+			disabled="#{collectionProperties.helper.contactDistAttachReadOnly}"
+			value="#{message['MICOS.Collections.CollectionProperties.ContactsTab.button.Add']}"
+			styleClass="button" /></div>
+		<h:outputText value="&#160;" />
+		<br></br>
+	</cs:container>
+
+
+	<!-- CONTACT END -->
+	<!-- DISTRIBUTION LIST START -->
+
+	<cs:container id="distributionContainer"
+		label="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.Title']}"
+		containerKind="#{collectionProperties.helper.containerKindone}"
+		collapsed="#{collectionProperties.flagHelper.contCollapsed}"
+		containerState="#{csContainerStateBean['addViewRight']}"
+		>
+		<cs:field id="distributionTitle"
+			label="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.PageTitle']}"></cs:field>
+		<br></br>
+		<br></br>
+		<cs:baseTable id="distribution" label="" var="item"
+			value="#{collectionProperties.collectionView.distributionList}"
+			containerType="type5" backingBean="#{collectionProperties}"
+			paginator="true"
+			rendered="true">
+			<cs:column width="20%"
+				header="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.Hierarchy']}">
+				<h:outputText id="hiearchyName" value="#{item.hiearchyName}" />
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column width="40%"
+				header="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.HierarchyElement']}">
+				<h:outputText id="hiearchyElementName"
+					value="#{item.hiearchyElementName}" />
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column width="30%"
+				header="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.Owner']}">
+				<h:outputText id="scopeAoROwnerName"
+					value="#{item.scopeAoROwnerName}" />
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column header="&#160;" fieldName="delete"
+				backingBean="#{collectionProperties}" width="10%">
+				<c:if
+					test="#{collectionProperties.helper.requiredDisplayOthers eq 'mutable'}">
+					<h:commandLink id="removeDistribution"
+						action="#{collectionProperties.deleteDistribution}"
+						onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+						<f:param name="selectedDistribution" value="#{item.tempId}" />
+						<h:graphicImage id="image01" alt="Remove"
+							url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" />
+					</h:commandLink>
+				</c:if>
+				<h:outputText value="&#160;" />
+			</cs:column>
+		</cs:baseTable>
+		<div class="toolbar"><h:commandButton id="searchScopeAOR"
+			action="#{collectionProperties.searchScopeAOR}"
+			disabled="#{collectionProperties.helper.contactDistAttachReadOnly}"
+			value="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.button.Add']}"
+			styleClass="button" /></div>
+		<br></br>
+		<br></br>
+		<cs:field id="distributionTitle1"
+			label="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.PageTitle1']}"></cs:field>
+		<br></br>
+		<br></br>
+
+		<cs:baseTable id="distribution1" label="" var="item"
+			value="#{collectionProperties.collectionView.listEmployeeView}"
+			containerType="type5" backingBean="#{collectionProperties}"
+			paginator="true" columnclasses="word_break_column">
+			<cs:column width="10%"
+				header="#{message['MICOS.Collections.CollectionProperties.ContactsTab.DataTable.Header.PID']}">
+				<h:outputText value="#{item.pid}" id="pid1" />
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column width="35%"
+				header="#{message['MICOS.Collections.CollectionProperties.ContactsTab.DataTable.Header.Name']}">
+
+				<h:outputLink id="contactHeaderLink"
+					onclick="openPopup(this.href,'_blank', 'intra_large'); return false;"
+					value="http://my.csintra.net/mypage/#{item.pid}">
+					<h:outputText value="#{item.firstName} #{item.surName}" id="name1" />
+				</h:outputLink>
+				<h:outputText value="&#160;" />
+			</cs:column>
+
+			<cs:column width="20%"
+				header="#{message['MICOS.Collections.CollectionProperties.ContactsTab.DataTable.Header.OrgUnit']}">
+				<h:outputText value="#{item.instradierung}" id="OrgUnit1" />
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column width="20%" styleClass="text-align:center"
+				header="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.DataTable.Header.CommentProvider']}">
+				<h:selectBooleanCheckbox id="commentProvider"
+					value="#{item.selected}" 
+					class="standard"
+					disabled="#{collectionProperties.helper.setupClassReadOnly}"/>
+				<h:outputText value="&#160;" />
+			</cs:column>
+			<cs:column header="&#160;" fieldName="delete"
+				backingBean="#{collectionProperties}" width="10%">
+				<c:if
+					test="#{collectionProperties.helper.requiredDisplayOthers eq 'mutable'}">
+					<h:commandLink id="removeContact1"
+						action="#{collectionProperties.deleteEmp}"
+						onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+						<f:param name="selectedContact" value="#{item.tempId}" />
+						<h:graphicImage id="image20" alt="Remove"
+							url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" />
+					</h:commandLink>
+				</c:if>
+				<h:outputText value="&#160;" />
+			</cs:column>
+		</cs:baseTable>
+		<div class="toolbar"><h:commandButton id="searchScopeAOR1"
+			action="#{collectionProperties.flagHelper.searchEmp}"
+			value="#{message['MICOS.Collections.CollectionProperties.DistributionListTab.button.Add']}"
+			styleClass="button"
+			disabled="#{collectionProperties.helper.contactDistAttachReadOnly}" /></div>
+		<br></br>
+		<br></br>
+	</cs:container>
+
+	<!-- DISTRIBUTION LIST END -->
+	<!-- ATTACHMENT START -->
+
+	<cs:container id="attachmentContainer"
+		label="#{message['MICOS.Collections.CollectionProperties.AttachmentTab.Title']}"
+		containerKind="#{collectionProperties.helper.containerKindone}"
+		collapsed="#{collectionProperties.flagHelper.contCollapsed}">
+		<div class="selector"><cs:baseTable id="addFileTable"
+			containerType="type5" var="item"
+			value="#{collectionProperties.attachmentList}" width="10%"
+			paginator="true">
+			<cs:column width="60%"
+				header="#{message['MICOS.Collections.CollectionProperties.AttachmentTab.FileName']}"
+				fieldName="fileName">
+				<h:graphicImage url="#{item.fileIconUrl}" />
+				<h:commandLink id="downloadAttachment"
+					action="#{collectionProperties.downloadAttachment}">
+					<f:param name="SelectedAttachmentId" value="#{item.tempId}" />
+					<h:outputText id="attachfileName" value="#{item.fileName}" />
+					<h:outputText value="&#160;" />
+				</h:commandLink>
+			</cs:column>
+			<cs:column width="25%"
+				header="#{message['MICOS.Collections.CollectionProperties.AttachmentTab.uploadDate']}"
+				fieldName="uploadDate">
+				<h:outputText id="uploadDate" value="#{item.uploadDate}" />
+			</cs:column>
+			<cs:column width="15%"
+				header="#{message['MICOS.Collections.CollectionProperties.AttachmentTab.size']}"
+				fieldName="size">
+				<h:outputText id="displaySize" value="#{item.displaySize}" />
+			</cs:column>
+			<cs:column fieldName="delete" header="&#160;"
+				backingBean="#{collectionProperties}" width="10%">
+				<c:if
+					test="#{collectionProperties.helper.requiredDisplayOthers eq 'mutable'}">
+					<h:commandLink id="deleteAttachment"
+						action="#{collectionProperties.deleteAttachment}"
+						onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+						<f:param name="SelectedAttachmentId" value="#{item.tempId}" />
+						<h:graphicImage id="image011" alt="Remove"
+							url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" />
+					</h:commandLink>
+				</c:if>
+				<h:outputText value="&#160;" />
+			</cs:column>
+		</cs:baseTable></div>
+		<div class="toolbar">
+		<div class="fakefileinput"><t:inputFileUpload
+			value="#{collectionProperties.attachmentName}" storage="file"
+			styleClass="file"
+			valueChangeListener="#{collectionProperties.validateAndAddAttachment}"
+			onchange="submit()"
+			disabled="#{collectionProperties.helper.contactDistAttachReadOnly}"
+			immediate="true" /> <h:commandButton id="validateAttach"
+			disabled="#{collectionProperties.helper.contactDistAttachReadOnly}"
+			value="#{message['MICOS.Collections.CollectionProperties.AttachmentTab.File']}"
+			styleClass="button" /></div>
+		</div>
+		<br />
+
+		<div class="selector"><cs:baseTable id="linkTable"
+			containerType="type1" label="linkTable" var="item"
+			value="#{collectionProperties.collectionView.links}"
+			backingBean="#{collectionProperties}" width="10%" paginator="true">
+			<cs:column
+				header="#{message['MICOS.Collections.CollectionProperties.AttachmentTab.LinkDescriptiion']}"
+				fieldName="Link Descriptiion" width="45%">
+				<h:outputText id="linkName" value="#{item.linkName}" />
+			</cs:column>
+			<cs:column
+				header="#{message['MICOS.Collections.CollectionProperties.AttachmentTab.Link']}"
+				fieldName="Link" width="45%">
+				<a href="#{item.linkUrl}" target="_blank"> <h:outputText
+					id="linkUrl" value="#{item.displayLinkUrl}" /> </a>
+			</cs:column>
+			<cs:column header="&#160;" fieldName="delete"
+				backingBean="#{collectionProperties}" width="10%">
+				<c:if
+					test="#{collectionProperties.helper.requiredDisplayOthers eq 'mutable'}">
+					<h:commandLink id="deleteLink"
+						action="#{collectionProperties.deleteLink}"
+						onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+						<f:param name="selectedlinkid" value="#{item.tempId}" />
+						<h:graphicImage id="image01" alt="Remove"
+							url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" />
+					</h:commandLink>
+				</c:if>
+				<h:outputText value="&#160;" />
+			</cs:column>
+		</cs:baseTable></div>
+		<table>
+			<tr>
+				<c:choose>
+					<c:when
+						test="#{collectionProperties.helper.requiredDisplayOthers eq 'mutable'}">
+						<td width="48%"><cs:field
+							label="#{message['MICOS.Collections.CollectionProperties.LinkTab.LinkName']}"
+							value="#{collectionProperties.helper.linkview.linkName}"
+							display="mutable" length="255" size="20"
+							id="createCollectionLinkName" /></td>
+						<td width="50%"><cs:field
+							label="#{message['MICOS.Collections.CollectionProperties.LinkTab.URL']}"
+							value="#{collectionProperties.helper.linkview.linkUrl}"
+							display="mutable" size="40" length="255"
+							id="createCollectionLinkURL" /></td>
+					</c:when>
+					<c:otherwise>
+						<h:outputText value="" />
+					</c:otherwise>
+				</c:choose>
+				<td align="right"><h:commandButton id="addLink"
+					value="#{message['MICOS.Collections.CollectionProperties.LinkTab.AddLink']}"
+					action="#{collectionProperties.addLink}"
+					disabled="#{collectionProperties.helper.contactDistAttachReadOnly}"
+					styleClass="button" /></td>
+			</tr>
+		</table>
+	</cs:container>
+
+	<!-- ATTACHMENT END -->
+	<div class="toolbar"><c:if
+		test="#{collectionProperties.helper.requiredDisplayOthers eq 'mutable'}">
+		<h:commandButton action="#{collectionProperties.submitCollection}"
+			value="#{message['MICOS.Collections.CollectionProperties.button.Submit']}"
+			styleClass="button" rendered="#{collectionProperties.renderSubmit}" 
+			disabled="#{collectionProperties.disableSubmit}"/>
+		<h:commandButton action="#{collectionProperties.saveCollection}"
+			value="#{message['MICOS.Collections.CollectionProperties.button.Save']}"
+			styleClass="button" />
+	</c:if></div>
+</cs:subForm>
+</html>

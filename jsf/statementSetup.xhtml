@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cs="http://credit-suisse.com/csJsf">
+
+
+
+	<!--<ui:define name="pageTitle">#{message['MICOS.Managementoverview.generatedViewsReports.pagetitle']}</ui:define>
+	<ui:define name="pageHeader">#{message['MICOS.Managementoverview.generatedViewsReports.pagetitle']}</ui:define>-->
+	
+	
+		
+		<!-- cs:subForm id="statementSetupForm" -->
+
+			<cs:container id="statementSetup"
+				label="#{statementSetupController.statementSetupView.description}">
+				
+				<cs:fieldLabel id="issueHeader" value="#{message['MICOS.Managementoverview.StatementSetup.header']}"  />
+						
+				
+						<table>
+							<tr>
+								<td width="41%" height="100%" valign="top">
+									
+											<cs:baseTable id="baseTable1"
+												var="rowItem" 
+										        divClass="vertical-scrollable-table"           												
+												backingBean="#{statementSetupController}" 
+												dataRowClasses="standard" 
+												value="#{statementSetupController.issueTypeList}"
+												rendered="true"
+												divStyle="border: solid 0 #CDDDEB ;border-left-width:1px;border-right-width:1px;border-top-width:1px;border-bottom-width:1px;margin: -.3em .9em -5em 0em;height:295px;width: 23.4em; ">
+																		
+												<cs:column id="checkBox" >
+												<h:selectBooleanCheckbox id="stdAloneIss" 
+												class="standard"
+												value="#{rowItem.selected}" />
+												</cs:column>
+												
+												<cs:column id="issueTypesName" 
+												backingBean="#{statementSetupController}">
+												<h:outputText value="#{rowItem.description}" />
+												</cs:column>
+												
+											</cs:baseTable>
+								
+							</td>
+							<td width="15%"><h:outputText value="&#160;" /></td>
+							<td width="50%">
+								<table>
+									<!-- Date -->
+									<c:if test="#{statementSetupController.actionDetails eq 'true'}">
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.date']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.date']}"
+										id="image01" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="dateFrom1" value="#{statementSetupController.statementSetupView.selectedFormDate}"
+											style="width:16.3em;">
+											<f:selectItems id="dateList1" 
+												value="#{statementSetupController.statementSetupView.dateFromList}" /> 
+											</h:selectOneMenu>
+										</td>
+									</tr>
+									</c:if>
+									
+									<c:if test="#{statementSetupController.actionDetails eq 'false'}">
+									
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.date']}" />
+											<h:outputText value="&#160;" /> <h:outputText value="&#160;" /> <h:outputText value="&#160;" />
+											<h:outputText value="&#160;" /> <h:outputText value="&#160;" /> <h:outputText value="&#160;" />
+											<h:outputText value="&#160;" /> <h:outputText value="&#160;" /> <h:outputText value="&#160;" />
+											<h:outputText value="&#160;" /> <h:outputText value="&#160;" /> <h:outputText value="&#160;" />
+											<h:outputText value="&#160;" /> <h:outputText value="&#160;" /> <h:outputText value="&#160;" />
+											<h:outputText value="&#160;" /> <h:outputText value="&#160;" /> <h:outputText value="&#160;" />
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.from']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.date']}"
+										id="image01" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="dateFrom11" value="#{statementSetupController.statementSetupView.selectedFormDate}"
+											style="width:7.2em;">
+											<f:selectItems id="dateList11" 
+												value="#{statementSetupController.statementSetupView.dateFromList}" /> 
+											</h:selectOneMenu>
+											<h:outputText value="&#160;" />
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.to']}" />
+											<h:outputText value="&#160;" />
+											<h:selectOneMenu id="dateTo" value="#{statementSetupController.statementSetupView.selectedToDate}"
+											style="width:7.2em;">
+											<f:selectItems id="dateList2" 
+												value="#{statementSetupController.statementSetupView.dateToList}" /> 
+											</h:selectOneMenu>
+											
+										</td>
+									</tr>
+									
+									</c:if>
+									<!-- Division -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.division']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.division']}"
+										id="image02" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="division" value="#{statementSetupController.statementSetupView.selectedDivision}"
+											style="width:16.3em;">
+											<f:selectItems id="divisionList" 
+												value="#{statementSetupController.statementSetupView.divisionList}" /> 
+											</h:selectOneMenu>
+										</td>
+									</tr>
+									
+									<!-- AOR Owner -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.aor']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.aor']}"
+										id="image03" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<cs:fieldValue id="aorText"
+											value="#{statementSetupController.statementSetupView.aorOwner}"
+											display="mutable"
+											disabled="true" size="29"/>
+										</td>
+										
+										<td>
+											<h:commandLink id="searchLink"
+												action="#{statementSetupController.employeeLookup}">												
+												<h:graphicImage id="aorSearch"
+													alt="#{message['MICOS.Managementoverview.StatementSetup.help.aorSearch']}"
+													url="${weblet:resource('com.csg.jsf.micIcons','/show-hierarchy.gif')}" />
+											</h:commandLink>
+										</td>	
+										
+										<td>	
+											<h:commandLink id="deleteLink"
+												action="#{statementSetupController.deleteAor}"
+												disabled="#{statementSetupController.renderIcon}"
+												onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+												
+												<h:graphicImage id="imageDel03" 
+												alt="#{message['MICOS.Managementoverview.StatementSetup.help.delete']}"
+													url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}"
+												rendered="true"/>
+											</h:commandLink>
+											
+										</td>
+											
+									</tr>
+									
+									<!-- Region -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.region']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.region']}"
+										id="image04" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="region" value="#{statementSetupController.statementSetupView.selectedRegion}"
+											style="width:16.3em;"
+											valueChangeListener="#{statementSetupController.selectCountry}"
+											onchange="submit()"
+											>
+											<f:selectItems id="regionList" 
+												value="#{statementSetupController.statementSetupView.regionList}" /> 
+											</h:selectOneMenu>
+										</td>
+									</tr>
+									
+									<!-- Country -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.country']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.country']}"
+										id="image05" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="country" value="#{statementSetupController.statementSetupView.selectedCountry}"
+											style="width:16.3em;">
+											<f:selectItems id="countryList" 
+												value="#{statementSetupController.statementSetupView.countryList}" /> 
+											</h:selectOneMenu>
+										</td>
+										
+									</tr>
+									
+									<!-- Status -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.status']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.status']}"
+										id="image06" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="status" value="#{statementSetupController.statementSetupView.selectedStatus}"
+											style="width:16.3em;"
+											disabled="#{statementSetupController.riskTheme || statementSetupController.closedInPeriod}" 
+											>
+											<f:selectItems id="statusList" 
+												value="#{statementSetupController.statementSetupView.statusList}" /> 
+											</h:selectOneMenu>
+										</td>
+									
+									</tr>
+									
+									<!-- Substatus -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.substatus']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.substatus']}"
+										id="image07" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="subStatus" value="#{statementSetupController.statementSetupView.selectedSubStatus}"
+											style="width:16.3em;"
+											disabled="#{statementSetupController.riskTheme || statementSetupController.closedInPeriod}" 
+											>
+											<f:selectItems id="subStatusList" 
+												value="#{statementSetupController.statementSetupView.subStatusList}" /> 
+											</h:selectOneMenu>
+										</td>
+										
+									</tr>
+									
+									<!-- Risk rating -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.riskRating']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.riskRating']}"
+										id="image08" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="rating" value="#{statementSetupController.statementSetupView.selectedRskRating}"
+											style="width:16.3em;"
+											disabled="#{statementSetupController.riskTheme || statementSetupController.closedInPeriod}" 
+											>
+											<f:selectItems id="ratingList" 
+												value="#{statementSetupController.statementSetupView.riskRatingList}" /> 
+											</h:selectOneMenu>
+										</td>
+										
+									</tr>
+									
+									<!-- Phase -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.phase']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.phase']}"
+										id="image09" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="phase" value="#{statementSetupController.statementSetupView.selectedPhase}"
+											style="width:16.3em;"
+											disabled="#{statementSetupController.riskTheme || statementSetupController.closedInPeriod}" 
+											>
+											<f:selectItems id="phaseList" 
+												value="#{statementSetupController.statementSetupView.phaseList}" /> 
+											</h:selectOneMenu>
+										</td>
+										
+									</tr>
+									
+									<!-- Risk Hierarchy -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.riskHier']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.riskHier']}"
+										id="image10" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="hier" value="#{statementSetupController.statementSetupView.selectedRskHierarchy}"
+											style="width:16.3em;"
+											disabled="#{statementSetupController.closedInPeriod}" 
+											valueChangeListener="#{statementSetupController.selectRiskCat}"
+											onchange="submit()"
+											>
+											<f:selectItems id="hierList" 
+												value="#{statementSetupController.statementSetupView.riskHierList}" /> 
+											</h:selectOneMenu>
+										</td>
+										
+									</tr>
+									
+									<!-- Risk Catagory -->
+									<tr>
+										<td width="20%">
+											<cs:fieldValue display="readonly" value="#{message['MICOS.Managementoverview.StatementSetup.label.riskCatagory']}" />
+										</td>
+										<td width="3%">
+										<h:graphicImage 
+										alt="#{message['MICOS.Managementoverview.StatementSetup.help.riskCatagory']}"
+										id="image11" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+										</td>
+										<td width="22%">
+											<h:selectOneMenu id="catagory" value="#{statementSetupController.statementSetupView.selectedRskCat}"
+											style="width:16.3em;"
+											disabled="#{statementSetupController.closedInPeriod}"
+											>
+											<f:selectItems id="catList" 
+												value="#{statementSetupController.statementSetupView.riskCatList}" /> 
+											</h:selectOneMenu>
+										</td>
+										
+									</tr>
+								</table>
+								
+							</td>
+							</tr>
+							
+							
+					</table>
+					<table>
+						<tr>
+							<td width="15%"></td>
+							<td width="30%">								
+								<h:commandButton id="none"
+								action="#{statementSetupController.noneButtonClicked}"
+								value="#{message['MICOS.Managementoverview.StatementSetup.button.none']}"/>
+								<h:outputText value="&#160;" /><h:outputText value="&#160;" />
+								<h:commandButton id="allAudit"
+								action="#{statementSetupController.auditRegClciked}"
+								value="#{message['MICOS.Managementoverview.StatementSetup.button.allaudit']}"/>
+								<h:outputText value="&#160;" /><h:outputText value="&#160;" />
+								<h:commandButton id="allBtn"
+								action="#{statementSetupController.allButtonClicked}"
+								value="#{message['MICOS.Managementoverview.StatementSetup.button.all']}"
+								style="height:21px; width:65px;"/>
+							</td>
+							<td width="55%"></td>
+						</tr>
+					</table>
+				
+				</cs:container>
+			<table>
+				<tr>
+					<td width="1%">
+						<h:outputText value="&#160;" /> 
+					</td>
+					<td width="15%">
+						<cs:fieldLabel
+						label="#{message['MICOS.Managementoverview.StatementSetup.label.outputFormat']}" />
+					</td>
+					<td width="30%">
+						<h:selectOneMenu id="output" value=""
+							style="width:20em;">
+							<f:selectItems id="outputList" 
+							value="#{statementSetupController.statementSetupView.outputFormatList}" /> 
+							</h:selectOneMenu>
+					</td>
+					<td width="5%">
+						<cs:fieldLabel
+						label="#{message['MICOS.Managementoverview.StatementSetup.label.name']}" />
+						
+					</td>
+					<td width="38%">
+						<cs:fieldValue id="fileName1" size="50" display="mutable" maxlength="120"
+						value="#{statementSetupController.statementSetupView.outputFileName}"/> 
+						
+					</td>
+					<td width="10%">
+						<h:commandButton
+							value="#{message['MICOS.Managementoverview.StatementSetup.button.submit']}"
+							action="#{statementSetupController.submitIssueStatement}"
+							styleClass="button" id="coTagId5"
+						/>
+					</td>
+					<td width="1%">
+						<h:outputText value="&#160;" /> 
+					</td>
+					
+				</tr>
+				
+			</table>
+				
+		<!-- /cs:subForm -->
+
+
+</html>

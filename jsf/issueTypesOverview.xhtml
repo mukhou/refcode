@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cs="http://credit-suisse.com/csJsf"
+	xmlns:tp="http://credit-suisse.com/csJsf/tabbedPane">
+
+    <ui:composition template="../../template/page.xhtml">
+	
+		<ui:define name="pageTitle">
+			#{message['MICOS.AdministratorIssueTypes.label.PageTitle']}
+			</ui:define>
+		<ui:define name="pageHeader">#{message['MICOS.AdministratorIssueTypes.label.PageTitle']}</ui:define>
+		<ui:define name="mainContent">	
+			<h:form id ="issueTypeOverviewForm" 
+			binding="#{issueTypeOverviewController.init}">
+			<cs:messages />
+			<div class="toolbar">
+				<h:commandButton id="createIssueAssignmentButton" 
+						value="#{message['MICOS.AdministratorIssueTypes.button.Create']}" 
+						action="#{issueTypeOverviewController.callCreateIssueGroup}" 
+						styleClass="button" rendered="true">
+						<f:param name="mode" 
+						        value="create"/>
+				</h:commandButton>
+				</div>
+				
+						
+				
+				<cs:container id="issueTypeOverviewContainer"
+				label="#{message['MICOS.AdministratorIssueTypes.label.ContainerName']}">
+				
+				<div class="selector">
+					
+				<cs:baseTable id="verticalScrollBody20"
+					label="#{message['MICOS.AdministratorIssueTypes.label.ContainerName']}" 
+					var="rowItem" 
+					filter="true"
+					value="#{issueTypeOverviewController.actualIssueOverviewList}" 
+					backingBean="#{issueTypeOverviewController}" 
+					dataRowClasses="standard" 
+					paginator="true" 
+					divClass="vertical-scrollable-table"
+					rows="#{issueTypeOverviewController.pageSize}"
+					rendered="true"
+					filterColClasses="filterColClass">
+					<!-- style="width: 600px" -->
+					
+					
+					<!-- Issue Id Column -->
+					
+					
+					<cs:column id="issueId" 
+						header="#{message['MICOS.AdministratorIssueTypes.baseTable.id']}" 
+						width="7em"
+						sort="true" fieldName="issueId" 
+						backingBean="#{issueTypeOverviewController}">
+						<cs:facet name="filter">
+						<h:inputText size="10" value="#{issueTypeOverviewController.filterhelper.filterId}" />
+						</cs:facet>
+						<h:outputText value="#{rowItem.issueId}" />
+					</cs:column>
+					
+					<!-- Issue Type Name Column -->
+					<cs:column id="issueTypeName"
+						width="14em"
+						header="#{message['MICOS.AdministratorIssueTypes.baseTable.issueTypeName']}" 
+						sort="true" fieldName="issueName" 
+						backingBean="#{issueTypeOverviewController}">
+							<h:commandLink 
+									id="issTypeNameLink"
+									action="#{issueTypeOverviewController.showIssueTypeDetails}">
+									<f:param name="elementid" 
+										value="#{rowItem.issueId}" />								
+						        	<f:param name="mode" 
+						        		value="read-only" />
+						        	<f:param name="fromPage" 
+						        		value="callCreateIssueGroup" />
+									<h:outputText value="#{rowItem.issueName}" />
+								</h:commandLink>
+						<cs:facet name="filter">
+						<h:inputText value="#{issueTypeOverviewController.filterhelper.filterName}"  size="28"/>
+						</cs:facet>
+					
+						
+					</cs:column>
+					
+					<!-- Added By Column -->
+					<cs:column id="addedBy"
+						width="14em"
+						header="#{message['MICOS.AdministratorIssueTypes.baseTable.addedBy']}" 
+						sort="true" fieldName="addedByName" 
+						backingBean="#{issueTypeOverviewController}">
+						<cs:facet name="filter">
+						<h:inputText value="#{issueTypeOverviewController.filterhelper.filterAddedBy}" size="28" />
+						</cs:facet>
+						<h:outputText value="#{rowItem.addedByName}" />
+					</cs:column>
+					
+					<!-- Create date Column -->
+					<cs:column id="createDate"
+						header="#{message['MICOS.AdministratorIssueTypes.baseTable.createDate']}" 
+						width="9em"
+						sort="true" fieldName="createDate" 
+						backingBean="#{issueTypeOverviewController}">
+						<cs:facet name="filter">
+						<h:inputText value="#{issueTypeOverviewController.filterhelper.filtercDate}" size="15"/>
+						</cs:facet>
+						<h:outputText 
+								value="#{rowItem.createDate}" >
+								<f:convertDateTime pattern="dd-MMM-yyyy" />
+					    </h:outputText>
+					</cs:column>
+					
+					<!-- Modification Date Column -->
+					<cs:column id="modificationDate"
+						width="11em"
+						header="#{message['MICOS.AdministratorIssueTypes.baseTable.modificationDate']}" 
+						sort="true" fieldName="modificationDate" 
+						backingBean="#{issueTypeOverviewController}">
+						<cs:facet name="filter">
+						<h:inputText value="#{issueTypeOverviewController.filterhelper.filtermDate}" size="19" />
+						</cs:facet>
+						
+						<h:outputText 
+								value="#{rowItem.modificationDate}" >
+								<f:convertDateTime pattern="dd-MMM-yyyy" />
+					    </h:outputText>
+						
+					</cs:column>
+					
+					<!-- Available Column -->
+					<cs:column id="available"
+						width="6em"
+						header="#{message['MICOS.AdministratorIssueTypes.baseTable.available']}"
+						sort="true" fieldName="availability" 
+						backingBean="#{issueTypeOverviewController}">
+						<cs:facet name="filter">
+						    <h:selectOneMenu style="width:100%"
+								value="#{issueTypeOverviewController.filterhelper.filterAvailable}">
+								<f:selectItems 
+									value="#{issueTypeOverviewController.listOfAvailableData}" />
+						   </h:selectOneMenu>
+						</cs:facet>
+						<h:outputText value="#{rowItem.availability}" />
+					</cs:column>
+					
+					
+					<!-- Delete and Edit icon -->
+					
+					<cs:column header="&#160;" id="collectionEdit" fieldName="edit" 
+								backingBean="#{issueTypeOverviewController}">
+								
+								<h:commandLink 
+									id="issueTypeEditLink"
+									action="#{issueTypeOverviewController.editIssueDetails}">
+									<f:param name="elementid" 
+										value="#{rowItem.issueId}" id="editIssTypId" />
+									<f:param name="mode" 
+						        		value="edit" />
+									<h:graphicImage id="image02" alt="Edit" 
+										url="${weblet:resource('com.csg.jsf.micIcons','/ico_edit.gif')}" 
+										rendered="true"/>
+								</h:commandLink>
+								
+									<h:commandLink id="issueDeleteLink"
+									action="#{issueTypeOverviewController.deleteIssue}"
+									onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+									<f:param name="elementid" value="#{rowItem.issueId}"
+										id="deleteCollectionId" />
+										<h:graphicImage id="image03" alt="Remove"
+											url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}"
+											rendered="#{rowItem.flag}"/>
+								   </h:commandLink>
+								 
+									
+								<h:outputText value="&#160;" />
+							</cs:column>
+					
+				 	 
+				</cs:baseTable>
+				</div>
+				
+				<table >
+				<tr>
+					<td width="93%" align="right">
+						<h:outputText value="#{message['MICOS.Common.overview.label.HitsperPage']}" />
+					</td>
+					<td width="7%" align="right">
+						<h:selectOneMenu value="#{issueTypeOverviewController.pageSize}"
+						valueChangeListener="#{issueTypeOverviewController.selectRowSize}"
+						onchange="submit()">
+						<f:selectItems value="#{issueTypeOverviewController.listOfRowSize}" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+			</table>
+			</cs:container>
+			
+			<!-- Hits per page -->
+			
+	
+		    </h:form>
+	   </ui:define>
+    </ui:composition>
+
+</html>

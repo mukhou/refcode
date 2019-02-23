@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cs="http://credit-suisse.com/csJsf">
+
+					
+		
+					
+
+			<cs:container id="statementResults">
+				
+			<div class="selector">
+				<cs:baseTable id="verticalScrollBody20"
+					var="item" 
+					filter="true"
+					value="#{issueStatementResultsController.actualStatementList}" 
+					backingBean="#{issueStatementResultsController}" 
+					dataRowClasses="standard" 
+					paginator="true"
+					rows="#{issueStatementResultsController.pageSize}"
+					columnclasses="word_break_column"
+					rendered="true"
+					
+					>
+				
+				<!-- Statement Id -->
+				<cs:column 
+					width="4em"
+						header="#{message['MICOS.Managementoverview.StatementResult.table.header.id']}" 
+						fieldName="id"
+						backingBean="#{issueStatementResultsController}" sort="true">
+						<cs:facet name="filter">
+							<h:inputText size="8"
+								value="#{issueStatementResultsController.statementResultView.id}" 
+							/>
+							</cs:facet>
+							<h:outputText value="#{item.id}" />
+							
+				</cs:column>
+				<!-- Subscription Id-->
+				
+				<cs:column 
+						width="5em"
+						header="#{message['MICOS.Managementoverview.StatementResult.table.header.subscriptionId']}" 
+						fieldName="subscriptionId"
+						backingBean="#{issueStatementResultsController}" sort="true">
+						<cs:facet name="filter">
+							<h:inputText size="10"
+								value="#{issueStatementResultsController.statementResultView.subscriptionId}" 
+							/>
+							</cs:facet>
+							<h:outputText value="#{item.subscriptionId}" />
+							
+				</cs:column>
+				
+				<!-- Statement Type -->
+				<cs:column 
+					width="10em"
+					header="#{message['MICOS.Managementoverview.StatementResult.table.header.type']}" 
+					fieldName="statementType"
+					backingBean="#{issueStatementResultsController}" sort="true">
+					<cs:facet name="filter">
+						<h:inputText size="17"
+							value="#{issueStatementResultsController.statementResultView.statementType}" 
+						/>
+						</cs:facet>
+						<h:outputText value="#{item.statementType}" />
+							
+				</cs:column>
+				
+				<!-- Statement Name -->
+				<cs:column 
+					width="30em"
+					header="#{message['MICOS.Managementoverview.StatementResult.table.header.name']}" 
+					fieldName="statementName"
+					backingBean="#{issueStatementResultsController}" sort="true">
+					<cs:facet name="filter">
+						<h:inputText size="57"
+							value="#{issueStatementResultsController.statementResultView.statementName}" 
+						/>
+						</cs:facet>
+						<h:commandLink action="#{issueStatementResultsController.openAttachment}">
+								<f:param name="SelectedAttachmentId" value="#{item.attachment.id}" />
+								<u><cs:fieldValue value="#{item.attachment.fileName}" /></u>
+						</h:commandLink>
+						
+						<!--<h:commandLink
+							action="#{statementResultsController.openPage}"
+						>
+						<h:outputText value="#{item.attachment.fileName}" />
+						<f:param name="statementId" value="#{item.id}"/>
+						</h:commandLink>-->
+				</cs:column>
+				
+				<!-- Completed at -->
+				<cs:column 
+					width="10em"
+					header="#{message['MICOS.Managementoverview.StatementResult.table.header.complete']}" 
+					fieldName="completedAt"
+					backingBean="#{issueStatementResultsController}" sort="true">
+					<cs:facet name="filter">
+						<h:inputText size="8"
+							value="#{issueStatementResultsController.statementResultView.completedAt}" 
+						/>
+						</cs:facet>
+						<h:outputText value="#{item.completedAt}" />
+							
+				</cs:column>
+				
+				<!-- Covering Previous -->
+				<cs:column 
+					width="6em"
+					header="#{message['MICOS.Managementoverview.StatementResult.table.header.cover']}" 
+					fieldName="covPeriod"
+					backingBean="#{issueStatementResultsController}" sort="true">
+					
+						<cs:facet name="filter">
+									<h:selectOneMenu id="statusId" 
+										value="" 
+										style="width:5em;">
+										
+									</h:selectOneMenu>
+								</cs:facet>
+						<h:outputText value="#{item.covPeriod}" />
+							
+				</cs:column>
+				
+				<!-- Info and delete icon -->
+				<cs:column header="&#160;" id="collectionEdit" fieldName="edit" 
+								
+								styleClass="text-left" 
+								backingBean="#{issueStatementResultsController}">
+								
+								<h:commandLink id="infoLink"
+									action="#{issueStatementResultsController.openPage}">
+								   <h:graphicImage id="image02" alt="Edit" 
+										url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_instruction_16_cli.gif')}" 
+										rendered="true"/>
+										<f:param name="statementId" value="#{item.id}"/>
+								</h:commandLink>
+								
+								<h:outputText value="&#160;" />
+								
+								<h:commandLink id="deleteLink"
+									action="#{issueStatementResultsController.deleteStatement}"
+									onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+									<h:graphicImage id="image03" alt="Remove"
+										url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}"  
+										rendered="#{item.deleteRender}"/>
+										<f:param name="multiAttachmentId" value="#{item.multiAttachmentId}"/>
+								   </h:commandLink>
+						
+							
+								
+				</cs:column>
+				</cs:baseTable>
+			</div>
+			
+			<div class="toolbar">
+				<table id="table1" >
+				<tr>
+					<td width="93%" align="right">
+						<h:outputText id="hitsPerPageId"
+							value="#{message['MICOS.Common.overview.label.HitsperPage']}" />
+					</td>
+					<td width="7%" align="right">
+						<h:selectOneMenu id="selectedPageSize" 
+						value="#{issueStatementResultsController.pageSize}" 
+						valueChangeListener="#{issueStatementResultsController.changeRowSize}"
+						onchange="submit()">
+						<f:selectItems id="pageSizeList" 
+							value="#{issueStatementResultsController.listOfRowSize}"/>
+					</h:selectOneMenu>
+					</td>
+				</tr>
+			</table>
+			</div>
+			
+			</cs:container>
+			<div class="toolbar">
+				<h:commandButton id="refreshId" 
+				action="#{issueStatementResultsController.refreshPage}"
+				value="#{message['MICOS.Managementoverview.StatementResult.table.button.refresh']}"/>
+			</div>
+			
+				
+		
+
+
+</html>

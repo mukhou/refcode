@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cs="http://credit-suisse.com/csJsf">
+
+<ui:composition template="../template/page.xhtml">
+
+	<ui:define name="pageTitle" >#{message['MICOS.Common.hierarchyelementsearch.pagetitle']}</ui:define>
+	<ui:define name="pageHeader" >#{message['MICOS.Common.hierarchyelementsearch.pagetitle']}</ui:define>
+	
+	<ui:define name="mainContent" >
+		<h:form  binding="#{selectionviaaorcontroller.init}">
+			<cs:messages/>
+			<cs:container label="#{message['MICOS.Common.hierarchyelementsearch.pagetitle']}" containerKind="blue" >
+
+				<table>
+					<tr>
+						<td><cs:fieldLabel display="read-only" value="#{message['MICOS.searchAoR.label.hierarchyName']}" /></td>
+						<td><cs:fieldLabel display="read-only" value="#{message['MICOS.searchAoR.label.hierarchyelementName']}" /></td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td><cs:fieldValue id="_focus" display="mutable" size="40" value="#{selectionviaaorcontroller.searchCriteria.hierarchyName}" /></td>
+						<td><cs:fieldValue display="mutable" size="40" value="#{selectionviaaorcontroller.searchCriteria.title}" /></td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td><cs:fieldLabel label="#{message['MICOS.searchAoR.label.aoROwnerFirstName']}" /></td>
+						<td><cs:fieldLabel label="#{message['MICOS.searchAoR.label.aoROwnerSurname']}" /></td>
+						<td><cs:fieldLabel label="#{message['MICOS.searchAoR.label.aoROwnerPID']}" /></td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td><cs:fieldValue display="mutable" size="40" value="#{selectionviaaorcontroller.searchCriteria.aorOwnerFirstname}" /></td>
+						<td><cs:fieldValue display="mutable" size="40" value="#{selectionviaaorcontroller.searchCriteria.aorOwnerSurname}" /></td>
+						<td><cs:fieldValue display="mutable" size="30" value="#{selectionviaaorcontroller.searchCriteria.aorOwnerName}" /></td>
+						<td><h:commandButton action="#{selectionviaaorcontroller.searchHierarchyElement}" 
+									alt="#{message['MICOS.Common.hierarchyelementsearch.pagetitle']}" image="${weblet:resource('com.csg.jsf.micIcons','/ico_search_a.gif')}" 
+									style="border:0px;background-color:#ffffff;color:#ffffff;height:16px;width:16px;" />
+						</td>
+					</tr>
+
+				</table>
+
+			</cs:container>
+			<cs:container label="#{message['MICOS.Controlsetupandissuance.seletionviewHe.heselection']}" >
+					<cs:baseTable id="paginatorSampleTableId"
+					var="item" paginator="true" value="#{selectionviaaorcontroller.listOfHierarchyElement}"
+					columnclasses="text-col, text-col, text-col, text-col, num-col, num-col"
+					rows="#{selectionviaaorcontroller.pageSize}">
+
+					<cs:column header="#{message['MICOS.searchAoR.label.hierarchyName']}">
+						<h:outputText value="#{item.hierarchyName}" />
+					</cs:column>
+
+					<cs:column header="#{message['MICOS.searchAoR.label.hierarchyelementName']}">
+						<h:outputText value="#{item.title}" />
+					</cs:column>
+
+					<cs:column header="#{message['MICOS.searchAoR.label.parentHierarchyelementName']}">
+						<h:outputText value="#{item.parentHierarchyElementName}" />
+						<h:outputText value="&#160;" />
+					</cs:column>
+					<cs:column header="#{message['MICOS.searchAoR.label.aoROwner']}">
+						<h:outputText value="#{item.aorOwnerName}" />
+						<h:outputText value="&#160;" />
+					</cs:column>
+					<c:if test="#{!selectionviaaorcontroller.poHierarchyEleSearch}">
+						<cs:column header="#{message['MICOS.searchAoR.label.role']}" styleClass="text-right">
+						  <h:panelGroup rendered="#{item.enableRoleList}">
+								<h:selectOneMenu id="roleselection" style="width:12em;" value="#{item.selectedRole.id}">
+									<f:selectItems value="#{item.hierarchyRoleList}" id="id01" />
+								</h:selectOneMenu>
+							</h:panelGroup>
+							<h:outputText value="&#160;" />
+	          			</cs:column>
+						
+						<cs:column header="#{message['MICOS.searchAoR.label.level']}" styleClass="text-right">
+	          				<h:inputText value="#{item.level}" maxlength="3" style="border:1px; width:3em;" />            
+	  	      			</cs:column>
+           			</c:if>
+					<cs:column header="&#160;" width="3%" rowspan="2">
+					<c:if test="#{selectionviaaorcontroller.poHierarchyEleSearch}">
+              			<cs:singleRowSelect display="mutable" groupName="selection" value="#{selectionviaaorcontroller.selectedIndex}"
+                        		 styleClass="radioButtonClass"  />
+            		</c:if>
+            		<c:if test="#{!selectionviaaorcontroller.poHierarchyEleSearch}">
+              			<h:selectBooleanCheckbox value="#{item.selected}" class="standard" disabled="#{!item.enableRoleList}"/>
+            		</c:if>
+						
+					</cs:column>
+
+				</cs:baseTable>
+				<div class="toolbar">
+					<h:commandButton value="#{message['MICOS.Controlsetupandissuance.selectionviaaor.button.Select']}"
+						action="#{selectionviaaorcontroller.select}" styleClass="button" /> 
+					<h:commandButton value="#{message['MICOS.Controlsetupandissuance.controlstepdetails.button.cancle']}" 
+						action="#{selectionviaaorcontroller.cancel}" styleClass="button" immediate="true"/>
+				</div>
+
+			</cs:container>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
+</html>
+

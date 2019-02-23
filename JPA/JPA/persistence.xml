@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+        version="1.0" xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="MICOSJPA" transaction-type="RESOURCE_LOCAL">
+				<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+				<non-jta-data-source>jndiMICOS</non-jta-data-source>
+				
+
+		<class>com.csg.cs.micos.entitybean.Addlviewingrightpid</class>
+		<class>com.csg.cs.micos.entitybean.Aorowner</class>
+		<class>com.csg.cs.micos.entitybean.Attachment</class>
+		<class>com.csg.cs.micos.entitybean.Attachmenttype</class>
+		<class>com.csg.cs.micos.entitybean.Auditlog</class>
+		<class>com.csg.cs.micos.entitybean.Audittrail</class>
+		<class>com.csg.cs.micos.entitybean.Audittrailtype</class>
+		<class>com.csg.cs.micos.entitybean.Businessdivision</class>
+		<class>com.csg.cs.micos.entitybean.Coding</class>
+		<class>com.csg.cs.micos.entitybean.Colclassificationbusdiv</class>
+		<class>com.csg.cs.micos.entitybean.Colclassificationsserv</class>
+		<class>com.csg.cs.micos.entitybean.Colclassifictionregion</class>
+		<class>com.csg.cs.micos.entitybean.Colisscommentsnote</class>
+		<class>com.csg.cs.micos.entitybean.Colisstask</class>
+		<class>com.csg.cs.micos.entitybean.Collection</class>
+		<class>com.csg.cs.micos.entitybean.Collectionclassification</class>
+		<class>com.csg.cs.micos.entitybean.Collectionissuenotification</class>
+		<class>com.csg.cs.micos.entitybean.Collectionissuetyperel</class>
+		<class>com.csg.cs.micos.entitybean.Collectiontype</class>
+		<class>com.csg.cs.micos.entitybean.Contact</class>
+		<class>com.csg.cs.micos.entitybean.Country</class>
+		<class>com.csg.cs.micos.entitybean.Detcollectionscope</class>
+		<class>com.csg.cs.micos.entitybean.Distribution</class>
+		<class>com.csg.cs.micos.entitybean.Employee</class>
+		<class>com.csg.cs.micos.entitybean.Hierarchy</class>
+		<class>com.csg.cs.micos.entitybean.Hierarchyadmin</class>
+		<class>com.csg.cs.micos.entitybean.Hierarchyelement</class>
+		<class>com.csg.cs.micos.entitybean.Hierarchyrole</class>
+		<class>com.csg.cs.micos.entitybean.Hierarchyroleelement</class>
+		<class>com.csg.cs.micos.entitybean.Hierarchytype</class>
+		<class>com.csg.cs.micos.entitybean.Icrightregion</class>
+		<class>com.csg.cs.micos.entitybean.Issue</class>
+		<class>com.csg.cs.micos.entitybean.Issueaccessaor</class>
+		<class>com.csg.cs.micos.entitybean.Issueaccesspid</class>
+		<class>com.csg.cs.micos.entitybean.Issuebusinesscategorization</class>
+		<class>com.csg.cs.micos.entitybean.Issuecodinggroup</class>
+		<class>com.csg.cs.micos.entitybean.Issuecreatorgroup</class>
+		<class>com.csg.cs.micos.entitybean.Issuecreatorgroupemployee</class>
+		<class>com.csg.cs.micos.entitybean.Issueescalation</class>
+		<class>com.csg.cs.micos.entitybean.Issuegroupadministrator</class>
+		<class>com.csg.cs.micos.entitybean.Issueimplementationsupport</class>
+		<class>com.csg.cs.micos.entitybean.Issuephase</class>
+		<class>com.csg.cs.micos.entitybean.Issuereference</class>
+		<class>com.csg.cs.micos.entitybean.Issuerequest</class>
+		<class>com.csg.cs.micos.entitybean.Issuetype</class>
+		<class>com.csg.cs.micos.entitybean.Issueupdate</class>
+		<class>com.csg.cs.micos.entitybean.Issuecoordinatorright</class>
+		<class>com.csg.cs.micos.entitybean.Legalentitycoding</class>
+		<class>com.csg.cs.micos.entitybean.Link</class>
+		<class>com.csg.cs.micos.entitybean.Multiattachment</class>
+		<class>com.csg.cs.micos.entitybean.Multilink</class>
+		<class>com.csg.cs.micos.entitybean.Notification</class>
+		<class>com.csg.cs.micos.entitybean.Notificationbatch</class>
+		<class>com.csg.cs.micos.entitybean.Notificationoption</class>
+		<class>com.csg.cs.micos.entitybean.Notificationtype</class>
+		<class>com.csg.cs.micos.entitybean.Observation</class>
+		<class>com.csg.cs.micos.entitybean.Periodtype</class>
+		<class>com.csg.cs.micos.entitybean.Periodtypeconversion</class>
+		<class>com.csg.cs.micos.entitybean.Recommendation</class>
+		<class>com.csg.cs.micos.entitybean.Referencecode</class>
+		<class>com.csg.cs.micos.entitybean.Referencecodegroup</class>
+		<class>com.csg.cs.micos.entitybean.Region</class>
+		<class>com.csg.cs.micos.entitybean.Reportparam</class>
+		<class>com.csg.cs.micos.entitybean.Reporttype</class>
+		<class>com.csg.cs.micos.entitybean.Reportqueue</class>
+		<class>com.csg.cs.micos.entitybean.Riskcategorization</class>
+		<class>com.csg.cs.micos.entitybean.Scopecoding</class>
+		<class>com.csg.cs.micos.entitybean.Statement</class>
+		<class>com.csg.cs.micos.entitybean.Statementsubscription</class>
+		<class>com.csg.cs.micos.entitybean.Sharedservices</class>
+		<class>com.csg.cs.micos.entitybean.Status</class>
+		<class>com.csg.cs.micos.entitybean.Cutoffdefinition</class>
+		
+		<properties>
+				<property name="eclipselink.cache.shared.default" value="false"/>
+		</properties>
+</persistence-unit>
+</persistence>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--Start of Oracle data base configuration-->
+	<bean id="dataSource" class="com.csg.cs.micos.util.MICOSDataSource" destroy-method="close"/>
+	<!--End of Oracle data base configuration-->
+	
+	<!--Start of hibernate configuration-->
+	<bean id="factory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" scope="singleton">
+		<property name="mappingResources">
+			<list>
+				<value>mapping/Accessaor.hbm.xml</value>
+				<value>mapping/Aorowner.hbm.xml</value>
+				<value>mapping/Applicationrole.hbm.xml</value>
+				<value>mapping/Applicationroleemployee.hbm.xml</value>
+				<value>mapping/Attachment.hbm.xml</value>
+				<value>mapping/Attachmenttype.hbm.xml</value>
+				<value>mapping/Auditlog.hbm.xml</value>
+				<value>mapping/Control.hbm.xml</value>
+				<value>mapping/Controller.hbm.xml</value>
+				<value>mapping/Controlobjective.hbm.xml</value>
+				<value>mapping/Controlreference.hbm.xml</value>	
+				<value>mapping/Controlrfc.hbm.xml</value>
+				<value>mapping/Controltype.hbm.xml</value>
+				<value>mapping/Designee.hbm.xml</value>
+				<value>mapping/Employee.hbm.xml</value>
+				<value>mapping/Escalation.hbm.xml</value>
+				<value>mapping/Executionschedule.hbm.xml</value>
+				<value>mapping/Executionschema.hbm.xml</value>
+				<value>mapping/Executiontask.hbm.xml</value>
+				<value>mapping/Executor.hbm.xml</value>
+				<value>mapping/Executoraor.hbm.xml</value>
+				<value>mapping/Executorpid.hbm.xml</value>
+				<value>mapping/Goal.hbm.xml</value>
+				<value>mapping/Goalscontrolobjective.hbm.xml</value>
+				<value>mapping/Goalspolicy.hbm.xml</value>
+				<value>mapping/Hierarchy.hbm.xml</value>
+				<value>mapping/Hierarchyadmin.hbm.xml</value>
+				<value>mapping/Hierarchyelement.hbm.xml</value>
+				<value>mapping/Hierarchyrole.hbm.xml</value>
+				<value>mapping/Hierarchytype.hbm.xml</value>
+				<value>mapping/Link.hbm.xml</value>
+				<value>mapping/Multiattachment.hbm.xml</value>
+				<value>mapping/Multilanguagetranslation.hbm.xml</value>
+				<value>mapping/Multilink.hbm.xml</value>
+				<value>mapping/Periodtype.hbm.xml</value>
+				<value>mapping/Periodtypeconversion.hbm.xml</value>
+				<value>mapping/Policy.hbm.xml</value>
+				<value>mapping/Qaschema.hbm.xml</value>
+				<value>mapping/Reminder.hbm.xml</value>
+				<value>mapping/Rfc.hbm.xml</value>
+				<value>mapping/Employeeroleelement.hbm.xml</value>
+				<value>mapping/Hierarchyroleelement.hbm.xml</value>
+				<value>mapping/Rollingsignoff.hbm.xml</value>
+				<value>mapping/Rating.hbm.xml</value>
+				<value>mapping/Ratinggroup.hbm.xml</value>
+				<value>mapping/Ratinggrouprating.hbm.xml</value>
+				<value>mapping/Schedule.hbm.xml</value>
+				<value>mapping/Scheduleadhocdate.hbm.xml</value>
+				<value>mapping/Schedulewhen.hbm.xml</value>
+				<value>mapping/Setup.hbm.xml</value>
+				<value>mapping/Sequenceorder.hbm.xml</value>
+				<value>mapping/Sharedcontrol.hbm.xml</value>
+				<value>mapping/Signoffschema.hbm.xml</value>
+				<value>mapping/Status.hbm.xml</value>	
+				<value>mapping/Step.hbm.xml</value>		
+				<value>mapping/Supportedlanguage.hbm.xml</value>
+				<value>mapping/Supportschema.hbm.xml</value>
+				<value>mapping/Translation.hbm.xml</value>
+				<value>mapping/Userprofile.hbm.xml</value>
+				<value>mapping/Notificationbatch.hbm.xml</value>
+				<value>mapping/Notificationtype.hbm.xml</value>
+				<value>mapping/Notification.hbm.xml</value>
+				<value>mapping/Poweroption.hbm.xml</value>
+				<value>mapping/Poschedule.hbm.xml</value>
+				<value>mapping/Poescalation.hbm.xml</value>
+				<value>mapping/Batchjob.hbm.xml</value>
+				<value>mapping/CCElementType.hbm.xml</value>
+				<value>mapping/CCFieldValue.hbm.xml</value>
+				<value>mapping/CCGeoLocSection.hbm.xml</value>
+				<value>mapping/CCGeoLocation.hbm.xml</value>
+				<value>mapping/ControlColElementControl.hbm.xml</value>
+				<value>mapping/ControlCollection.hbm.xml</value>
+				<value>mapping/ControlCollectionAssignment.hbm.xml</value>
+				<value>mapping/ControlCollectionElement.hbm.xml</value>
+				<value>mapping/ControlCollectionField.hbm.xml</value>
+				<value>mapping/ControlCollectionReport.hbm.xml</value>
+				<value>mapping/ControlCollectionSection.hbm.xml</value>
+				<value>mapping/Employeeleaving.hbm.xml</value>
+				<value>mapping/EmployeeReassignment.hbm.xml</value>
+				<value>mapping/ReportQueue.hbm.xml</value>
+				<value>mapping/ReportType.hbm.xml</value>
+				<value>mapping/ReportParams.hbm.xml</value>
+				<value>mapping/Controlremwaresc.hbm.xml</value>
+				<value>mapping/Remwarescotherrecipient.hbm.xml</value>
+				<value>mapping/Referencecodegroup.hbm.xml</value>  
+				<value>mapping/Referencecode.hbm.xml</value> 
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+			
+			<!-- we tried this to solve the conflicting weblogic antlr.jar 
+				<prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory
+				</prop>
+				 --> 
+				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+			</props>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	<!--End of hibernate configuration-->
+	
+	<!--Start of Spring configuration-->
+	
+	<!--Start of spring configuration for Goal-->
+    <bean id="goalSpringManager" class="com.csg.cs.micos.comp.impl.GoalManagerImpl" scope="prototype">
+		<property name="goalDao">
+			<ref local="goalDao" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	
+	<bean id="goalDao" class="com.csg.cs.micos.dao.impl.GoalDaoImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	<!--End of spring configuration for Goal-->
+	
+	<!--Start of spring configuration for Control setup-->
+    <bean id="controlSpringManager" class="com.csg.cs.micos.comp.impl.ControlSetupManagerImpl" scope="prototype">
+		<property name="controlSetupDao">
+			<ref local="controlSetupDao" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	
+	<bean id="controlSetupDao" class="com.csg.cs.micos.dao.impl.ControlSetupDaoImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	<!--End of spring configuration for Control setup-->
+	
+	<!--Start of spring configuration for Hierarchy-->
+    <bean id="hierarchyManager" class="com.csg.cs.micos.comp.impl.HierarchyManagerImpl" scope="prototype">
+		<property name="hierarchyDao">
+			<ref local="hierarchyDao" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	
+	<bean id="hierarchyDao" class="com.csg.cs.micos.dao.impl.HierarchyDaoImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	<!--End of spring configuration for Hierarchy-->
+	
+	
+		<!--Start of spring configuration for Control performance-->
+	<bean id="controlPerformanceManager" class="com.csg.cs.micos.comp.impl.ControlPerformanceManagerImpl" scope="prototype">
+		<property name="controlPerformanceDao">
+			<ref local="controlPerformanceDao"/>
+		</property>
+		<property name="sessionFactory">
+			<ref bean="factory"/>
+		</property>
+	</bean>
+	
+	<bean id="controlPerformanceDao" class="com.csg.cs.micos.dao.impl.ControlPerformanceDaoImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	<!--End of spring configuration for Control performance-->
+	
+   <!--spring configuration for Mangement Overview-->	    
+	<bean id="managementOverviewManager" class="com.csg.cs.micos.comp.impl.ManagementOverviewManagerImpl" scope="prototype">
+		<property name="managementOverviewDao">
+			<ref local="managementOverviewDao"/>
+		</property>		
+		<property name="sessionFactory">
+			<ref bean="factory"/>
+		</property>
+	</bean>
+		<bean id="managementOverviewDao" class="com.csg.cs.micos.dao.impl.ManagementOverviewDaoImpl" scope="prototype">
+			<property name="sessionFactory">
+				<ref bean="factory" />
+			</property>
+		</bean>
+	<!--End of spring configuration for Mangement Overview-->
+	
+	<!--Start of spring configuration for Micos views-->
+    <bean id="micosViewManager" class="com.csg.cs.micos.comp.impl.MicosViewManagerImpl" scope="prototype">
+		<property name="micosViewDao">
+			<ref local="micosViewDao" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="factory"/>
+		</property>
+	</bean>
+	
+	<bean id="micosViewDao" class="com.csg.cs.micos.dao.impl.MicosViewDaoImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	
+	<!--End of spring configuration for Micos views-->
+	
+	<!--Start of spring configuration for Base Manager-->
+	<bean id="baseManager" class="com.csg.cs.micos.comp.impl.BaseManagerImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	<!--End of spring configuration for Base Manager-->
+	
+	<!--Start of spring configuration for Common Employee Search -->
+    <bean id="commonManager" class="com.csg.cs.micos.comp.impl.CommonManagerImpl" scope="prototype">
+		<property name="commonDao">
+			<ref local="commonDao" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	<bean id="commonDao" class="com.csg.cs.micos.dao.impl.CommonDaoImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	<!-- End of spring configuration for Common Employee Search -->
+	
+	<!--Start of spring configuration for Control performance-->
+	<bean id="controlCollectionManager" class="com.csg.cs.micos.comp.impl.ControlCollectionManagerImpl" scope="prototype">
+		<property name="controlCollectionDao">
+			<ref local="controlCollectionDao"/>
+		</property>
+		<property name="sessionFactory">
+			<ref bean="factory"/>
+		</property>
+	</bean>
+	
+	<bean id="controlCollectionDao" class="com.csg.cs.micos.dao.impl.ControlCollectionDaoImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	<!--End of Spring configuration-->
+	
+	<!--Start of spring configuration for Inactive Employee-->
+	<bean id="inactiveEmployeeManager" class="com.csg.cs.micos.comp.impl.InactiveEmployeeManagerImpl" scope="prototype">
+		<property name="inactiveEmployeeDao">
+			<ref local="inactiveEmployeeDao"/>
+		</property>
+		<property name="sessionFactory">
+			<ref bean="factory"/>
+		</property>
+	</bean>
+	
+	<bean id="inactiveEmployeeDao" class="com.csg.cs.micos.dao.impl.InactiveEmployeeDaoImpl" scope="prototype">
+		<property name="sessionFactory">
+			<ref bean="factory" />
+		</property>
+	</bean>
+	
+</beans>

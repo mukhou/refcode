@@ -1,0 +1,985 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:c="http://java.sun.com/jstl/core" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:cs="http://credit-suisse.com/csJsf" 
+	xmlns:tp="http://credit-suisse.com/csJsf/tabbedPane" 
+        xmlns:mic="http://credit-suisse.com/micJsf">
+
+	<ui:component>
+ 
+		<div class="simple-container-micos">
+			<div class="container-title">
+				<div class="title">#{message['MICOS.Controlsetupandissuance.stepschedule.label.ControlSchedule']}</div>
+			</div>
+			<table>
+				<tr>
+					<td width="16%">
+						<cs:fieldLabel id="controlStepSchedule1" value="#{message['MICOS.Controlsetupandissuance.stepschedule.label.StartDate']}" required="true" />
+					</td>
+					<td width="5%">
+						<h:graphicImage id="controlStepSchedule2" alt="#{message['MICOS.Controlsetupandissuance.stepSchedule.Help.StartDate']}" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+					</td>
+					<td width="20%">
+						<mic:dateField id="controlStepSchedule3" label="" display="#{controldetailscontroller.display}" dateType="javautil" datePicker="#{controldetailscontroller.datePick}" value="#{controldetailscontroller.scheduleStartDate}" />
+					</td>
+					<td width="10%">
+						<h:outputText styleClass="label" id="controlStepSchedule4" value="#{message['MICOS.Controlsetupandissuance.stepschedule.label.EndDate']}" required="false" />
+					</td>
+					<td width="5%">
+						<h:graphicImage id="controlStepSchedule5" alt="#{message['MICOS.Controlsetupandissuance.stepSchedule.Help.EndDate']}" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+					</td>
+					<td>
+						<mic:dateField id="controlStepSchedule6" label="" display="#{controldetailscontroller.display}" dateType="javautil" datePicker="#{controldetailscontroller.datePick}" value="#{controldetailscontroller.scheduleEndDate}" />
+					</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td width="16%" valign="top">
+						<h:outputText styleClass="label" id="controlStepSchedule7" value="#{message['MICOS.Controlsetupandissuance.stepschedule.label.PeriodicPattern']}" required="false" />
+					</td>
+					<td width="5%" valign="top">
+						<h:graphicImage id="controlStepSchedule8" alt="#{message['MICOS.Controlsetupandissuance.stepSchedule.Help.PeriodicPattern']}" url="${weblet:resource('com.csg.jsf.micIcons','/ico_info_question_16_cli.gif')}" />
+					</td>
+					<td valign="top" width="10%" rowspan="2">
+						<h:selectOneRadio class="standard" id="periodic_radio" onclick="submit()"  
+							value="#{controldetailscontroller.schedulePeriodicAdhoc}"
+							disabled="#{controldetailscontroller.disabled}" 
+							layout="pageDirection"
+							valueChangeListener="#{controldetailscontroller.changePeriodicPattern}">			
+							<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodicAdhocList}"/>
+							<cs:resetValueChangeListener forIds="periodic_radio" />
+		  				</h:selectOneRadio>
+		  			</td>
+					<td width="8%" align="left">
+						<h:selectOneMenu id="controlStepSchedule10" value="#{controldetailscontroller.schedulePatternQty}" 
+							disabled="#{controldetailscontroller.disabled || controldetailscontroller.schedulePeriodicAdhoc eq 'A'}">
+							<f:selectItems value="#{controldetailscontroller.scheduleHelper.daysOfMonth}" />
+						</h:selectOneMenu>
+					</td>
+					<td width="61%" align="left">
+						<h:selectOneMenu id="controlStepSchedule11" value="#{controldetailscontroller.schedulePatternFreq}" 
+							disabled="#{controldetailscontroller.disabled || controldetailscontroller.schedulePeriodicAdhoc eq 'A'}" 
+							valueChangeListener="#{controldetailscontroller.visibleDay}" onchange="submit()">
+							<f:selectItems value="#{controldetailscontroller.scheduleHelper.patternPeriodicTypeList}" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+					</td>
+					<td colspan="2">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+					</td>
+					<td colspan="3">
+						<c:if test="#{controldetailscontroller.schedulePeriodicAdhoc eq 'A'}">
+						<table>
+							<tr>
+								<td width="20%" align="left" valign="top">
+									<mic:dateField label="" id="controlStepSchedule12" display="#{controldetailscontroller.display}" dateType="javautil" datePicker="#{controldetailscontroller.datePick}" value="#{controldetailscontroller.scheduleAdhocDate}" size="10" />
+								</td>
+								<td width="10%" align="center" valign="top">
+									<h:commandButton id="controlStepSchedule21" value="#{message['MICOS.Controlsetupandissuance.controlstepdetails.button.>>']}" action="#{controldetailscontroller.addAdhocDate}" disabled="#{controldetailscontroller.disabled}" styleClass="button" />
+								</td>
+								<td width="25%" align="left">
+									<cs:baseTable id="controlStepAdhoc" label="adhocdate" var="item" value="#{controldetailscontroller.adhocDateList}" backingBean="#{controldetailscontroller}" paginator="true" rows="#{controldetailscontroller.pageSize}">
+										<cs:column width="4%" header="#{message['MICOS.Controlsetupandissuance.controlstepdetails.icon.Date']}">
+											<h:outputText value="#{item.scheduleAdhocDate}"/>
+										</cs:column>
+										<cs:column width="2%" styleClass="text-right" header="&#160;" fieldName="delete" backingBean="#{controldetailscontroller}">
+											<c:if test="#{controldetailscontroller.disableDelete eq false}">
+												<h:commandLink action="#{controldetailscontroller.deleteDate}" onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+													<f:param name="tempId" value="#{item.tempId}" />
+													<h:graphicImage id="controlStepAdhoc1" alt="#{message['MICOS.Controlsetupandissuance.controlstepdetails.icon.delete']}" url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}" />
+												</h:commandLink>
+											</c:if>
+											<h:outputText value="&#160;" />
+										</cs:column>
+									</cs:baseTable>
+								</td>
+								<td width="45%">
+								</td>
+						</tr>
+						</table>
+						</c:if>
+						<c:if test="#{controldetailscontroller.scheduleHelper.showDays eq 'true'}">
+						<table>
+							<tr>
+								<td width="10%" align="left">
+									<h:outputText value="on" styleclass="label" style="vertical-align: middle;" />
+								</td>
+								<td width="5%" align="left">
+									<h:selectBooleanCheckbox class="standard" value="#{controldetailscontroller.scheduleHelper.monday}" disabled="#{controldetailscontroller.disabled}" />
+								</td>
+								<td width="10%" align="left">
+									<cs:fieldLabel label="#{message['MICOS.Controlsetupandissuance.stepSchedule.days.Monday']}" />
+								</td>
+								<td width="5%" align="left">
+									<h:selectBooleanCheckbox class="standard" value="#{controldetailscontroller.scheduleHelper.tuesday}" disabled="#{controldetailscontroller.disabled}" />
+								</td>
+								<td width="10%" align="left">
+									<cs:fieldLabel label="#{message['MICOS.Controlsetupandissuance.stepSchedule.days.Tuesday']}" />
+								</td>
+								<td width="5%" align="left">
+									<h:selectBooleanCheckbox class="standard" value="#{controldetailscontroller.scheduleHelper.wednesday}" disabled="#{controldetailscontroller.disabled}" />
+								</td>
+								<td width="10%" align="left">
+									<cs:fieldLabel label="#{message['MICOS.Controlsetupandissuance.stepSchedule.days.Wednesday']}" />
+								</td>
+								<td width="45%">
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" align="left" />
+								<td width="5%" align="left">
+									<h:selectBooleanCheckbox class="standard" value="#{controldetailscontroller.scheduleHelper.thursday}" disabled="#{controldetailscontroller.disabled}" />
+								</td>
+								<td width="10%" align="left">
+									<cs:fieldLabel label="#{message['MICOS.Controlsetupandissuance.stepSchedule.days.Thursday']}" />
+								</td>
+								<td width="5%" align="left">
+									<h:selectBooleanCheckbox class="standard" value="#{controldetailscontroller.scheduleHelper.friday}" disabled="#{controldetailscontroller.disabled}" />
+								</td>
+								<td width="10%" align="left">
+									<cs:fieldLabel label="#{message['MICOS.Controlsetupandissuance.stepSchedule.days.Friday']}" />
+								</td>
+								<td width="60%" colspan= "3" align="left">
+									<h:commandLink disabled="#{controldetailscontroller.disabled}" action="#{controldetailscontroller.scheduleHelper.selectAllDate}">
+										<h:outputText value="all /" />
+									</h:commandLink>
+									<h:commandLink disabled="#{controldetailscontroller.disabled}" action="#{controldetailscontroller.scheduleHelper.deSelectAllDate}">
+										<h:outputText value="none" />
+									</h:commandLink>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" align="left" />
+								<td width="5%" align="left">
+									<h:selectBooleanCheckbox class="standard" value="#{controldetailscontroller.scheduleHelper.saturday}" disabled="#{controldetailscontroller.disabled}" />
+								</td>
+								<td width="10%" align="left">
+									<cs:fieldLabel label="#{message['MICOS.Controlsetupandissuance.stepSchedule.days.Saturday']}"/>
+								</td>
+								<td width="5%" align="left">
+									<h:selectBooleanCheckbox class="standard" value="#{controldetailscontroller.scheduleHelper.sunday}" disabled="#{controldetailscontroller.disabled}" />
+								</td>
+								<td width="10%" align="left">
+									<cs:fieldLabel label="#{message['MICOS.Controlsetupandissuance.stepSchedule.days.Sunday']}"/>
+								</td>
+								<td width="60%" colspan="3"/>
+							</tr>
+						</table>
+						</c:if>
+					</td>
+				</tr>
+			</table>
+			<table cellspacing="3">
+				<colgroup>
+					<col style="width: 70%" />
+					<col style="width: 18%" />
+					<col style="width: 12%" />
+				</colgroup>
+				<tr>
+					<td>
+						<h:outputText styleClass="label" value="#{message['MICOS.Controlperformance.stepSchedule.label.TaskSchedule']}" />
+					</td>
+					<td>
+						<h:outputText styleClass="label" value="#{message['MICOS.Controlperformance.stepSchedule.label.Duration']}" />
+					</td>
+					<td>
+						<h:outputText styleClass="label" value="#{message['MICOS.Controlperformance.stepSchedule.label.Deadline']}" />
+					</td>
+				</tr>
+				<c:if test="#{controldetailscontroller.checkSupport eq true}">
+					<tr style="background-color: #b2c2d1;">
+						<td>
+							<table cellspacing="5">
+								<tr>
+									<td width="21%">
+										<h:outputText styleClass="label" id="controlStepScheduleDur1" value="#{message['MICOS.Controlsetupandissuance.stepschedule.label.StartSupport']}" required="false" align="left" />
+									</td>
+									<td width="8%">
+										<h:inputText id="controlStepScheduleDur2" readonly="#{controldetailscontroller.readOnlyMode}" style="background: White;" size="2" maxlength="2" value="#{controldetailscontroller.scheduleSupportInitiateQty}" />
+									</td>
+									<td width="12%">
+										<h:selectOneMenu id="controlStepScheduleDur3" value="#{controldetailscontroller.scheduleSupportInitiatePeriodType}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodTypeList}" />
+										</h:selectOneMenu>
+									</td>
+									<td width="30%">
+										<h:selectOneMenu id="controlStepScheduleDur4" style="width: 17em;" value="#{controldetailscontroller.scheduleSupportScheduleWhen}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.supportScheduleWhenList}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td width="8%">
+										<h:inputText id="controlStepScheduleDur5" readonly="#{controldetailscontroller.readOnlyMode}" size="2" maxlength="2" value="#{controldetailscontroller.scheduleSupportDurationQty}" style="background: White;" />
+									</td>
+									<td width="10%">
+										<h:selectOneMenu id="controlStepScheduleDur6" value="#{controldetailscontroller.scheduleSupportDurationPeriodType}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodTypeList}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<h:outputText styleClass="label" id="controlStepScheduleDur7" required="false" size="10" value="#{controldetailscontroller.scheduleSupportDeadline}" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</c:if>
+				<c:if test="#{controldetailscontroller.checkPerformance eq 'true'}">
+					<tr style="background-color: #b2c2d1;">
+						<td>
+							<table cellspacing="5">
+								<tr>
+									<td width="21%">
+										<h:outputText styleClass="label" id="controlStepScheduleDur8" value="#{message['MICOS.Controlsetupandissuance.stepschedule.label.StartPerformance']}" required="false" align="left" />
+									</td>
+									<td width="8%">
+										<h:inputText id="controlStepScheduleDur9" readonly="#{controldetailscontroller.readOnlyMode}" size="2" maxlength="2" value="#{controldetailscontroller.scheduleExecInitQty}" style="background: White;" />
+									</td>
+									<td width="12%">
+										<h:selectOneMenu id="controlStepScheduleDur10" value="#{controldetailscontroller.scheduleExecInitPeriodType}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodTypeList}" />
+										</h:selectOneMenu>
+									</td>
+									<td width="30%">
+										<!-- h:selectOneMenu value="#{controldetailscontroller.scheduleExecWhen}" disabled="#{controldetailscontroller.disabled}">
+								<f:selectItems value="#{controldetailscontroller.scheduleWhenList}" />
+							</h:selectOneMenu-->
+										<h:outputText styleClass="label" id="controlStepScheduleDur11" value="#{message['MICOS.Controlsetupandissuance.stepschedule.label.AfterstartStepSchedule']}" required="false" align="left" />
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td width="8%">
+										<h:inputText id="controlStepScheduleDur12" readonly="#{controldetailscontroller.readOnlyMode}" size="2" maxlength="2" value="#{controldetailscontroller.scheduleExecDurationQty}" style="background: White;" />
+									</td>
+									<td width="12%">
+										<h:selectOneMenu id="controlStepScheduleDur13" value="#{controldetailscontroller.scheduleExecPeriodType}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodTypeList}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<h:outputText styleClass="label" id="controlStepScheduleDur14" required="false" size="10" value="#{controldetailscontroller.scheduleExecDeadline}" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</c:if>
+				<c:if test="#{controldetailscontroller.checkQA eq true}">
+					<tr style="background-color: #b2c2d1;">
+						<td>
+							<table cellspacing="5">
+								<tr>
+									<td width="21%">
+										<h:outputText styleClass="label" id="controlStepScheduleDur15" value="#{message['MICOS.Controlsetupandissuance.stepschedule.label.StartQA']}" required="false" align="left" />
+									</td>
+									<td width="8%">
+										<h:inputText id="controlStepScheduleDur16" readonly="#{controldetailscontroller.readOnlyMode}" size="2" maxlength="2" value="#{controldetailscontroller.scheduleQAInitQty}" style="background: White;" />
+									</td>
+									<td width="12%">
+										<h:selectOneMenu id="controlStepScheduleDur17" value="#{controldetailscontroller.scheduleQAInitPeriodType}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodTypeList}" />
+										</h:selectOneMenu>
+									</td>
+									<td width="30%">
+										<h:selectOneMenu id="controlStepScheduleDur18" style="width:17em;" value="#{controldetailscontroller.scheduleQAWhen}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.qaScheduleWhenList}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td width="8%">
+										<h:inputText id="controlStepScheduleDur19" readonly="#{controldetailscontroller.readOnlyMode}" size="2" maxlength="2" value="#{controldetailscontroller.scheduleQADurationQty}" style="background: White;" />
+									</td>
+									<td width="12%">
+										<h:selectOneMenu id="controlStepScheduleDur20" value="#{controldetailscontroller.scheduleQAPeriodType}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodTypeList}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<h:outputText styleClass="label" id="controlStepScheduleDur21" required="false" size="10" value="#{controldetailscontroller.scheduleQADeadline}" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</c:if>
+				<c:if test="#{controldetailscontroller.checkSignOff eq true}">
+					<tr style="background-color: #b2c2d1;">
+						<td>
+							<table cellspacing="5">
+								<tr>
+									<td width="21%">
+										<h:outputText styleClass="label" id="controlStepScheduleDur22" value="#{message['MICOS.Controlsetupandissuance.stepschedule.label.StartSign-off']}" required="false" align="left" />
+									</td>
+									<td width="8%">
+										<h:inputText id="controlStepScheduleDur23" readonly="#{controldetailscontroller.readOnlyMode}" size="2" maxlength="2" value="#{controldetailscontroller.scheduleSignoffInitQty}" style="background: White;" />
+									</td>
+									<td width="12%">
+										<h:selectOneMenu id="controlStepScheduleDur24" value="#{controldetailscontroller.scheduleSignoffInitPeriodType}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodTypeList}" />
+										</h:selectOneMenu>
+									</td>
+									<td width="30%">
+										<h:selectOneMenu id="controlStepScheduleDur25" style="width:17em;" value="#{controldetailscontroller.scheduleSignoffWhen}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.signoffScheduleWhenList}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td width="8%">
+										<h:inputText id="controlStepScheduleDur26" readonly="#{controldetailscontroller.readOnlyMode}" size="2" maxlength="2" value="#{controldetailscontroller.scheduleSignoffDurationQty}" style="background: White;" />
+									</td>
+									<td width="10%">
+										<h:selectOneMenu id="controlStepScheduleDur27" value="#{controldetailscontroller.scheduleSignoffPeriodType}" disabled="#{controldetailscontroller.disabled}">
+											<f:selectItems value="#{controldetailscontroller.scheduleHelper.schedulePeriodTypeList}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<h:outputText styleClass="label" id="controlStepScheduleDur28" required="false" size="10" value="#{controldetailscontroller.scheduleSignoffDeadline}" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</c:if>
+			</table>
+			<h:commandButton type="submit" id="hiddenButton" action="#{controldetailscontroller.selectdailyadhoc}" style="display:none;" />
+		</div>
+		
+		<div class="simple-container-micos">
+		<div class="container-title">
+			<div class="title">#{message['MICOS.Controlperformance.stepSchedule.label.NotificationSchedule']}</div>
+		</div></div>
+		<table>
+			<tr>
+				<td width="5%"> <h:outputText value="&#160;" /> </td>
+				<td width="3%" >
+					
+					<h:selectBooleanCheckbox id="reminder" 
+							value="#{controldetailscontroller.scheduleHelper.checkReminder}"
+							onclick="submit()" valueChangeListener="#{controldetailscontroller.changedCheckedReminder}"
+							class="standard" disabled="#{controldetailscontroller.disabled}"
+							/>
+				</td>
+				
+				<td width="6%" >
+					<cs:fieldLabel id="remindertxt"
+							value="#{message['MICOS.Controlsetupandissuance.stepSchedule.label.Reminder']}" />
+				</td>
+				<td width="11%"></td>
+				<td width="2%">
+					<h:selectBooleanCheckbox id="warning" 
+							value="#{controldetailscontroller.scheduleHelper.checkWarning}"
+							onclick="submit()" valueChangeListener="#{controldetailscontroller.changedCheckedWarning}"
+							class="standard" disabled="#{controldetailscontroller.disabled}"
+							/>
+				</td>
+				<td width="4%">
+					<cs:fieldLabel id="warningtxt"
+							value="#{message['MICOS.Controlsetupandissuance.stepSchedule.label.Warning']}" />
+				</td>
+				<td width="11%"></td>
+				<td width="3%">
+					<h:selectBooleanCheckbox id="escalation" 
+						value="#{controldetailscontroller.scheduleHelper.checkEscalation}"
+						onclick="submit()" valueChangeListener="#{controldetailscontroller.changedCheckedEscalation}"	
+						class="standard" disabled="#{controldetailscontroller.disabled}"/>
+				</td>
+				<td width="3%">
+					<cs:fieldLabel id="escalationtxt"
+							value="#{message['MICOS.Controlsetupandissuance.stepSchedule.label.Escalation']}" />
+				</td>
+				<td width="52%"></td>
+			</tr>
+			
+			</table>
+			
+			<table>
+			<tr>
+				<td width="3%"> <h:outputText value="&#160;" /></td>
+				<td width="97%">
+				<cs:fieldLabel id="explanationTxt1"
+								value="#{message['MICOS.Controlsetupandissuance.stepSchedule.label.Explanation1']}" />
+				<br></br>	
+				<cs:fieldLabel id="explanationTxt2"
+								value="#{message['MICOS.Controlsetupandissuance.stepSchedule.label.Explanation12']}" />
+				</td>
+			</tr>	</table>
+		
+		<!-- Reminder -->
+		<c:if test = "#{controldetailscontroller.scheduleHelper.checkReminder}">
+		<table style="margin:0 0 -13px 0;">
+		<tr>
+			<td width="2%"><h:outputText value="&#160;" /></td>
+			<td width="98%" align="center">
+				<cs:container id= "con4" 
+							label="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Reminder']}" 
+							style="width: 99%" containerKind="white" align="right" 
+							rendered="#{controldetailscontroller.scheduleHelper.checkReminder}"
+							containerState="#{csContainerStateBean['Reminder']}">
+					
+						<table width="53%" cellspacing="0">
+						<tr valign="top">
+							<td width="1%" align="left">
+								</td>
+							
+							<td width="9%" align="left">
+								<cs:fieldLabel id="startReminder"
+							    value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Start']}" />
+							</td>
+							<td width="5%" align="left" >
+								<cs:field id="startReminderTxt"
+								value="#{controldetailscontroller.scheduleHelper.reminderView.quantity}" display="mutable" size="2"
+								readonly="#{controldetailscontroller.readOnlyMode}" maxlength="5"/>
+							</td>
+							<td width="7%">
+								<h:selectOneMenu id="remindermenu" style="width:8.1em;" 
+								value="#{controldetailscontroller.scheduleHelper.reminderView.selectedEstimation}" disabled="#{controldetailscontroller.disabled}">													
+									<f:selectItems 
+										value="#{controldetailscontroller.scheduleHelper.reminderView.estimationList}" />	
+								</h:selectOneMenu> 
+							</td>
+							<td width="9%" align="left">
+								<cs:fieldLabel id="beforeDeadline"
+							    value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.BeforeDeadline']}" />
+							</td>
+							
+							<td width="24%" align="right"><h:outputText value="&#160;" /></td> 
+						</tr>
+					</table>
+					
+					<table width="53%" cellspacing="0" style="margin:0 0 0 0;">
+						<tr align="left">
+							<td width="1%"><h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								</td>
+							<td width="10%" align="left">
+								<cs:fieldLabel id="Recipient1"
+							    value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Recipient']}" />
+							</td>
+							
+							<td width="2%" align="right">
+								<h:selectBooleanCheckbox id="taskowner" 
+						        class="standard" value="#{controldetailscontroller.scheduleHelper.reminderView.recipient}"
+								disabled="#{controldetailscontroller.disabled}"/>
+								
+							</td>
+							<td width="10%">
+								<cs:fieldLabel
+						        value="#{controldetailscontroller.scheduleHelper.reminderView.taskOwner}" />
+							</td>
+							<td width="32%">
+								<h:outputText value="&#160;" />
+							</td>
+						</tr>
+					</table>
+					
+					<table width="53%" cellspacing="0" style="margin:0 0 0 0;">
+						<tr>
+							<td width="11%"><h:outputText value="&#160;" />	
+							</td>
+							<td width="2%">
+								<h:selectBooleanCheckbox id="others1" 
+					        	class="standard" value="#{controldetailscontroller.scheduleHelper.reminderView.checkOthers}"
+						        onclick="submit()" valueChangeListener="#{controldetailscontroller.changedCheckedOthersReminder}"
+								disabled="#{controldetailscontroller.disabled}"/>
+							</td>
+							<td width="8%">
+							    <cs:fieldLabel
+						        value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Others']}" />
+							</td>
+							<td width="33%" ></td>
+						</tr>
+					</table>
+					
+					<c:if test = "#{controldetailscontroller.scheduleHelper.reminderView.checkOthers}">
+						<table >
+							<tr> 
+								<td width="24%"><h:outputText value="&#160;" />	</td>
+								
+								<td width="58%" bgcolor="#6294B4" align="right" >
+									
+									<h:commandButton  value="#{message['MICOS.Controlsetupandissuance.stepSchedule.button.AddPid']}"	
+													styleClass="button" 
+													action="#{controldetailscontroller.addReminderRecipient}"
+													disabled="#{controldetailscontroller.disabled}"/> 
+													
+								</td>
+								<td width="18%" ></td>
+							</tr>
+							</table>
+						<table >
+						<tr>
+							<td width="44%">		
+							</td>
+							<td width="16%">
+								
+								<cs:baseTable  
+								id="reminderOtherList"	headers="none"
+								backingBean="#{controldetailscontroller}"
+								var="item"
+								value="#{controldetailscontroller.scheduleHelper.reminderView.listOthers}"			
+								dataRowClasses="standard"						
+								rendered="#{controldetailscontroller.scheduleHelper.reminderView.checkOthers}"
+								divClass="vertical-scrollable-table"
+								divStyle="height:100px;width: 34em;border: solid 0 #E8E8E8 ;border-left-width:1px;border-right-width:1px;border-top-width:1px;border-bottom-width:1px;margin-top:-1.1em" 
+								>
+								<cs:column 
+									style="width:28em;text-align:left;" 					
+									fieldName="firstName"
+									backingBean="#{controldetailscontroller}">																						
+									<h:outputText value="#{item.firstName}" />
+								</cs:column>
+								
+								<cs:column  style="width:.5em">									
+									
+									<h:commandLink 
+												action="#{controldetailscontroller.deleteReminderRecipient}" disabled="#{controldetailscontroller.disabled}"
+												onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+												<f:param name="selectedEmp" value="#{item.tempId}"  />								
+													<h:graphicImage  alt="Remove"
+														url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}"
+														rendered="true"/>
+									</h:commandLink>
+											
+									</cs:column>
+														
+							</cs:baseTable >
+							
+							</td>
+							<td width="40%" ></td>
+						</tr>
+					</table>
+					</c:if>
+					
+					<table width="53%" cellspacing="0">
+						<tr>
+							<td width="1%" align="right"><h:outputText value="&#160;" />		
+							</td>
+							<td width="9%" >
+								<cs:fieldLabel
+								value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Frequency']}" />
+							</td>
+							
+							<td width="4%" align="left">
+						        <cs:fieldLabel
+								value="#{controldetailscontroller.scheduleHelper.reminderView.freqRem}" />
+							</td>
+							<td width="36%" ></td>
+						</tr>
+					</table>
+				</cs:container>
+			</td>
+		</tr>
+	</table>
+	</c:if>
+	<!-- Warning  -->
+	<c:if test = "#{controldetailscontroller.scheduleHelper.checkWarning}">
+	<table style="margin:0 0 -13px 0;" >
+		<tr>
+			<td width="2%"><h:outputText value="&#160;" /></td>
+			<td width="98%" align="center">
+				<cs:container id= "con5" 
+							label="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Warning']}" 
+							style="width: 99%" containerKind="white" rendered="#{controldetailscontroller.scheduleHelper.checkWarning}"
+							 containerState="#{csContainerStateBean['Warning']}">
+					
+						<table width="53%" cellspacing="0">
+						<tr valign="top">
+							<td width="1%" align="right"><h:outputText value="&#160;" />
+								<h:outputText value="&#160;" /><h:outputText value="&#160;" />
+								</td>
+							
+							<td width="9%" align="right">
+								<cs:fieldLabel id="startReminder1"
+								value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Start']}" />
+							</td>
+							<td width="5%" align="left" >
+								<cs:field id="startReminderTxt1"
+								value="#{controldetailscontroller.scheduleHelper.warningView.quantity}" display="mutable" size="2" maxlength="5"
+								readonly="#{controldetailscontroller.readOnlyMode}"/>
+								
+							</td>
+							<td width="7%">
+								<h:selectOneMenu id="remindermenu1" style="width:8.1em;" 
+									value="#{controldetailscontroller.scheduleHelper.warningView.selectedEstimation}" disabled="#{controldetailscontroller.disabled}">
+										<f:selectItems 
+											value="#{controldetailscontroller.scheduleHelper.warningView.estimationList}"/>
+								</h:selectOneMenu>
+							</td>
+							<td width="9%" align="left">
+								<cs:fieldLabel id="afterDeadline"
+							    value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.AfterDeadline']}" />
+							</td>
+							
+							<td width="24%" align="right"><h:outputText value="&#160;" /></td> 
+						</tr>
+					</table>
+					
+					<table width="53%" cellspacing="0" style="margin:0 0 0 0;">
+						<tr align="left">
+							<td width="1%"><h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								</td>
+							<td width="10%" align="left">
+								<cs:fieldLabel id="Recipient2"
+							    value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Recipient']}" />
+							</td>
+							
+							<td width="2%" align="right">
+								<h:selectBooleanCheckbox id="taskowner2" disabled="#{controldetailscontroller.disabled}"
+						        class="standard" 
+								value="#{controldetailscontroller.scheduleHelper.warningView.recipient}"/>
+								
+							</td>
+							<td width="10%">
+								<cs:fieldLabel 
+						        value="#{controldetailscontroller.scheduleHelper.warningView.taskOwner}" />
+							</td>
+							<td width="32%">
+								<h:outputText value="&#160;" />
+							</td>
+						</tr>
+					</table>
+					
+					<table width="53%" cellspacing="0" style="margin:0 0 0 0;">
+						<tr>
+							<td width="11%"><h:outputText value="&#160;" />		
+							</td>
+							<td width="2%">
+								<h:selectBooleanCheckbox id="others2" disabled="#{controldetailscontroller.disabled}"
+					        	class="standard" value="#{controldetailscontroller.scheduleHelper.warningView.checkOthers}"
+						        onclick="submit()" valueChangeListener="#{controldetailscontroller.changedCheckedOthersWarning}"/>
+							</td>
+							<td width="8%">
+						        <cs:fieldLabel
+						        value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Others']}" />
+							</td>
+							<td width="33%" ></td>
+						</tr>
+					</table>
+					
+					<c:if test = "#{controldetailscontroller.scheduleHelper.warningView.checkOthers}">
+						<table  >
+						<tr> 
+							<td width="24%"><h:outputText value="&#160;" />	</td>
+							
+							<td width="58%" bgcolor="#6294B4" align="right" >
+								
+								<h:commandButton  value="#{message['MICOS.Controlsetupandissuance.stepSchedule.button.AddPid']}"	
+												styleClass="button" align="right" id="add1"
+												action="#{controldetailscontroller.addWarningRecipient}"
+												disabled="#{controldetailscontroller.disabled}"/> 	
+												
+							</td>
+							<td width="18%" ></td>
+						</tr>
+						</table>
+					<table >
+						<tr>
+							<td width="44%"><h:outputText value="&#160;" />		
+							</td>
+							<td width="16%">
+								<cs:baseTable  
+								id="warningOtherList"					 	
+								backingBean="#{controldetailscontroller}"
+								var="item"
+								value="#{controldetailscontroller.scheduleHelper.warningView.listOthers}"			
+								dataRowClasses="standard"						
+								rendered="#{controldetailscontroller.scheduleHelper.warningView.checkOthers}"
+								divClass="vertical-scrollable-table"
+								divStyle="height:100px;width: 34em;border: solid 0 #E8E8E8 ;border-left-width:1px;border-right-width:1px;border-top-width:1px;border-bottom-width:1px;margin-top:-1.1em" 
+								 
+								headers="none"
+								
+								>
+								<cs:column 
+									style="width:28em;text-align:left;" 					
+									fieldName="firstName"
+									backingBean="#{controldetailscontroller}">																					
+									<h:outputText value="#{item.firstName}" />								
+								</cs:column>	
+								<cs:column style="width:.5em"
+									width="1%">
+											
+									<h:commandLink 
+												action="#{controldetailscontroller.deleteWarningRecipient}" disabled="#{controldetailscontroller.disabled}"
+												onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+												<f:param name="selectedEmp" value="#{item.tempId}" />	
+													<h:graphicImage  alt="Remove"
+														url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}"
+														rendered="true"/>
+											</h:commandLink>
+									</cs:column> 					
+							</cs:baseTable >
+							</td>
+							<td width="40%" ></td>
+						</tr>
+					</table>
+					</c:if>
+					<table  cellspacing="0">
+						<tr>
+							<td width="3%" align="left"><h:outputText value="&#160;" />		
+							</td>
+							<td width="47%" align="left">
+								<cs:fieldLabel
+								value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Frequency']}" />
+							</td>
+							
+							<td width="18%" align="left">
+								<h:selectOneMenu id="freqmenu" style="width:42em;" disabled="#{controldetailscontroller.disabled}"
+									value="#{controldetailscontroller.scheduleHelper.warningView.selectedFrequency}">
+										<f:selectItems 
+										value="#{controldetailscontroller.scheduleHelper.warningView.frequenList}" />
+								</h:selectOneMenu>
+							</td>
+							<td width="32%" align="left"></td>
+						</tr>
+					</table>
+				</cs:container>
+			</td>
+		</tr>
+		
+	</table>
+	</c:if>
+	<!-- Escalation  -->
+	<c:if test = "#{controldetailscontroller.scheduleHelper.checkEscalation}">
+	<table style="margin:0 0 -13px 0;">
+		<tr>
+			<td width="2%"><h:outputText value="&#160;" /></td>
+			<td width="98%" align="center">
+				<cs:container id= "con6" 
+							label="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Escalation']}" 
+							style="width: 99%" containerKind="white" rendered="#{controldetailscontroller.scheduleHelper.checkEscalation}"
+							containerState="#{csContainerStateBean['Escalation']}">
+					
+						<table width="53%" cellspacing="0">
+						<tr valign="top">
+							<td width="1%" align="right"><h:outputText value="&#160;" />
+								<h:outputText value="&#160;" /><h:outputText value="&#160;" />
+								</td>
+							
+							<td width="9%" align="right">
+								<cs:fieldLabel id="startReminder2"
+								value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Start']}" />
+							</td>
+							<td width="5%" align="left" >
+								<cs:field id="startReminderTxt2"
+								value="#{controldetailscontroller.scheduleHelper.escalationView.quantity}" display="mutable" size="2" maxlength="5"
+								readonly="#{controldetailscontroller.readOnlyMode}"/>								
+							</td>
+							<td width="7%">								
+								<h:selectOneMenu id="remindermenu2" style="width:8.1em;" 
+									value="#{controldetailscontroller.scheduleHelper.escalationView.selectedEstimation}" disabled="#{controldetailscontroller.disabled}">
+										<f:selectItems 
+											value="#{controldetailscontroller.scheduleHelper.escalationView.estimationList}"/>
+								</h:selectOneMenu>
+							</td>
+							<td width="9%" align="left">
+								<cs:fieldLabel id="afterDeadline2"
+							    value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.AfterDeadline']}" />
+							</td>
+							
+							<td width="24%" align="right"><h:outputText value="&#160;" /></td> 
+						</tr>
+					</table>
+					
+					<table width="49%" cellspacing="0" style="margin:0 0 0 0;">
+						<tr align="left">
+							<td width="1%"><h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								<h:outputText value="&#160;" />
+								</td>
+							<td width="18%" align="left">
+								<cs:fieldLabel id="Recipient3"
+							    value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Recipient']}" />
+							</td>
+							<td width="2%">
+							</td>
+							
+							<td width="5%" align="left">
+								<h:selectBooleanCheckbox id="superior" disabled="#{controldetailscontroller.disabled}"
+						        class="standard" 
+								value="#{controldetailscontroller.scheduleHelper.escalationView.recipient}"/>
+								
+							</td>
+							
+							<td width="16%">
+								<cs:fieldLabel
+						       value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Superior']}" />
+							  </td>
+							  <td width="13%">
+								<h:selectOneMenu 
+									id="superiormenu" style="width:10.5em;" disabled="#{controldetailscontroller.disabled}"
+									value="#{controldetailscontroller.scheduleHelper.escalationView.selectedHierarchy}">
+									<f:selectItems 
+										value="#{controldetailscontroller.scheduleHelper.escalationView.hierList}"/>
+								</h:selectOneMenu> 
+							</td>
+							<td width="45%">
+								<h:outputText value="&#160;" />
+							</td>
+						</tr>
+					</table>
+					
+					<table width="53%" cellspacing="0" style="margin:0 0 0 0;">
+						<tr>
+							<td width="11%"><h:outputText value="&#160;" />		
+							</td>
+							<td width="2%">
+								<h:selectBooleanCheckbox id="others3" disabled="#{controldetailscontroller.disabled}"
+					        	class="standard" value="#{controldetailscontroller.scheduleHelper.escalationView.checkOthers}"
+						        onclick="submit()" valueChangeListener="#{controldetailscontroller.changedCheckedOthersEscalation}"/>
+							</td>
+							<td width="8%">
+						        <cs:fieldLabel
+						        value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Others']}" />
+							</td>
+							<td width="33%" ></td>
+						</tr>
+					</table>
+					
+					<c:if test = "#{controldetailscontroller.scheduleHelper.escalationView.checkOthers}">
+						<table>
+							<tr> 
+								<td width="24%"><h:outputText value="&#160;" />	</td>
+								
+								<td width="58%" bgcolor="#6294B4" align="right" >
+									
+									<h:commandButton  value="#{message['MICOS.Controlsetupandissuance.stepSchedule.button.AddPid']}"	
+														styleClass="button" align="right" id="add2"
+														action="#{controldetailscontroller.addEscalationRecipient}"
+														disabled="#{controldetailscontroller.disabled}"/> 
+													
+								</td>
+								<td width="18%" ></td>
+							</tr>
+						</table>
+					<table >
+						<tr>
+							<td width="44%"><h:outputText value="&#160;" />		
+							</td>
+							<td width="16%">
+								<cs:baseTable  
+									id="escalationOtherList"					 	
+									backingBean="#{controldetailscontroller}"
+									var="item"
+									value="#{controldetailscontroller.scheduleHelper.escalationView.listOthers}"			
+									dataRowClasses="standard"						
+									rendered="#{controldetailscontroller.scheduleHelper.escalationView.checkOthers}"
+									divClass="vertical-scrollable-table"
+									divStyle="height:100px;width: 34em;border: solid 0 #E8E8E8 ;border-left-width:1px;border-right-width:1px;border-top-width:1px;border-bottom-width:1px;margin-top:-1.1em" 									 
+									headers="none"
+									>
+									<cs:column 
+										style="width:28em;text-align:left;" 
+										fieldName="firstName"
+										backingBean="#{controldetailscontroller}"
+										>																								
+										<h:outputText value="#{item.firstName}" />
+										
+									</cs:column>
+									<cs:column style="width:.5em">
+									
+										<h:commandLink  disabled="#{controldetailscontroller.disabled}"
+													action="#{controldetailscontroller.deleteEscalationRecipient}"
+													onclick="if (!confirm('Are you sure you want to delete this record?')) return false">
+													<f:param name="selectedEmp" value="#{item.tempId}" />
+														<h:graphicImage  alt="Remove"
+															url="${weblet:resource('com.csg.jsf.micIcons','/ico_trash.gif')}"
+															rendered="true"/>
+												</h:commandLink>	
+									</cs:column>					
+							</cs:baseTable >
+							</td>
+							<td width="40%" ></td>
+						</tr>
+					</table>
+					</c:if>
+					<table  cellspacing="0">
+						<tr>
+							<td width="3%" align="right"><h:outputText value="&#160;" />		
+							</td>
+							<td width="47%" >
+								<cs:fieldLabel
+								value="#{message['MICOS.Controlsetupandissuance.stepSchedule.containerReminder.Frequency']}" />
+							</td>
+							
+							<td width="18%" align="left">
+								<h:selectOneMenu id="freqmenu1" style="width:42em;" disabled="#{controldetailscontroller.disabled}"
+									value="#{controldetailscontroller.scheduleHelper.escalationView.selectedFrequency}">
+										<f:selectItems 
+										value="#{controldetailscontroller.scheduleHelper.escalationView.frequenList}" />
+								</h:selectOneMenu>
+							</td>
+							<td width="32%" ></td>
+						</tr>
+					</table>
+				</cs:container>
+			</td>
+		</tr>
+		
+	</table>
+	</c:if>
+
+	<!-- END -->			
+			
+	</ui:component>
+</html>

@@ -1,0 +1,1401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.csg.cs.micos.bean.Employee" 
+    table="EMPLOYEE"
+>
+
+    <id
+        name="employeeid"
+        type="java.lang.Integer"
+        column="EMPLOYEEID"
+    >
+        <generator class="sequence">
+		<param name="sequence">EMPLOYEESEQ</param>
+	</generator>
+    </id>
+    
+    <version
+        name="lastupdate"
+        type="java.sql.Timestamp"
+        column="LASTUPDATE"
+    />
+
+    <property
+        name="pid"
+        type="java.lang.String"
+        column="PID"
+        length="7"
+    />
+    <property
+        name="personaltitle"
+        type="java.lang.String"
+        column="PERSONALTITLE"
+        length="50"
+    />
+    <property
+        name="firstname"
+        type="java.lang.String"
+        column="FIRSTNAME"
+        length="255"
+    />
+    <property
+        name="lastname"
+        type="java.lang.String"
+        column="LASTNAME"
+        length="255"
+    />
+    <property
+        name="instradierung"
+        type="java.lang.String"
+        column="INSTRADIERUNG"
+        length="50"
+    />
+    <property
+        name="department"
+        type="java.lang.String"
+        column="DEPARTMENT"
+        length="50"
+    />
+    <property
+        name="bu"
+        type="java.lang.String"
+        column="BU"
+        length="4"
+    />   
+    <property
+        name="division"
+        type="java.lang.String"
+        column="DIVISION"
+        length="255"
+    />
+    <property
+        name="mail"
+        type="java.lang.String"
+        column="MAIL"
+        length="255"
+    />
+    <property
+        name="country"
+        type="java.lang.String"
+        column="COUNTRY"
+        length="10"
+    />
+    <property
+        name="address"
+        type="java.lang.String"
+        column="ADDRESS"
+        length="255"
+    />
+    <property
+        name="lang"
+        type="java.lang.String"
+        column="LANG"
+        length="2"
+    />
+    <property
+        name="telephone"
+        type="java.lang.String"
+        column="TELEPHONE"
+        length="40"
+    />
+    <property
+        name="active"
+        type="java.lang.String"
+        column="ACTIVE"
+        length="1"
+    />
+    <property
+        name="supervisorpid"
+        type="java.lang.String"
+        column="SUPERVISORPID"
+        length="7"
+    />
+    <property
+        name="batchodate"
+        type="java.sql.Timestamp"
+        column="BATCHODATE"
+        length="7"
+    />
+    <property
+        name="createdate"
+        type="java.sql.Timestamp"
+        column="CREATEDATE"
+        length="7"
+    />
+    
+    <property
+        name="lastupdateemployeeid"
+        type="java.math.BigDecimal"
+        column="LASTUPDATEEMPLOYEEID"
+        length="22"
+    />
+	
+	<property
+        name="lastworkingday"
+        type="java.sql.Timestamp"
+        column="LASTWORKINGDAY"
+        length="7"
+    />
+
+    <!-- Associations -->
+    
+     <!-- bi-directional one-to-many association to Poweroption -->
+    <set
+        name="poweroptions"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Poweroption"
+        />
+    </set>
+
+     <!-- bi-directional one-to-many association to Poschedule -->
+    <set
+        name="poschedules"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Poschedule"
+        />
+    </set>
+    
+     <!-- bi-directional one-to-many association to Poescalation -->
+    <set
+        name="poescalations"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Poescalation"
+        />
+    </set>            
+ 
+     <!-- bi-directional one-to-many association to Notification -->
+    <set
+        name="notifications"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Notification"
+        />
+    </set>
+    
+    <!-- bi-directional one-to-many association to Notification -->
+    <set
+        name="notifyuser"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="NOTIFYUSER" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Notification"
+        />
+    </set>  
+
+     <!-- bi-directional one-to-many association to Notificationtype -->
+    <set
+        name="notificationtypes"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Notificationtype"
+        />
+    </set>  
+ 
+     <!-- bi-directional one-to-many association to Notificationbatch -->
+    <set
+        name="notificationbatchs"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Notificationbatch"
+        />
+    </set> 
+    <!-- bi-directional one-to-many association to Rating -->
+    <set
+        name="ratings"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Rating"
+        />
+    </set>
+     <!-- bi-directional one-to-many association to Ratinggroup -->
+    <set
+        name="ratinggroups"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Ratinggroup"
+        />
+    </set>
+     <!-- bi-directional one-to-many association to Ratinggrouprating -->
+    <set
+        name="ratinggroupratings"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Ratinggrouprating"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Executiontask -->
+    <set
+        name="executiontasks"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executiontask"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Accessaor -->
+    <set
+        name="accessaors"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Accessaor"
+        />
+    </set>
+    
+    <!-- bi-directional one-to-many association to Signoffschema -->
+    <set
+        name="signoffschemas"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+      
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Signoffschema"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Schedule -->
+    <set
+        name="schedules"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Schedule"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Setup -->
+    <set
+        name="setups"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Setup"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Attachment -->
+    <set
+        name="attachments"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Attachment"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Step -->
+    <set
+        name="steps"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Step"
+        />
+    </set>
+	
+	<!-- bi-directional one-to-many association to Status -->
+    <set
+        name="statuses"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="EMPLOYEEID" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Status"
+        />
+    </set>
+	
+    <!-- bi-directional one-to-many association to Executionschedule -->
+    <set
+        name="executionschedules"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executionschedule"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Hierarchyadmin -->
+    <set
+        name="hierarchyadminsByEmployeeid"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Hierarchyadmin"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Hierarchyadmin -->
+    <set
+        name="hierarchyadminsByHierarchyadmin"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="HIERARCHYADMIN" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Hierarchyadmin"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Link -->
+    <set
+        name="links"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Link"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Hierarchyelement -->
+    <set
+        name="hierarchyelements"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Hierarchyelement"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Translation -->
+    <set
+        name="translations"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column ="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Translation"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Controltype -->
+    <set
+        name="controltypes"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Controltype"
+        />
+    </set>
+    
+    <!-- bi-directional one-to-many association to Applicationroleemployee -->
+    <set
+        name="applicationroleemployeesByEmployee"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="EMPLOYEE" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Applicationroleemployee"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Applicationroleemployee -->
+    <set
+        name="applicationroleemployeesByLastupdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Applicationroleemployee"
+        />
+    </set>
+	<!-- bi-directional one-to-many association to Periodtype -->
+    <set
+        name="periodtypes"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Periodtype"
+        />
+    </set>
+	<!-- bi-directional one-to-many association to Periodtypeconversion -->
+    <set
+        name="periodtypeconversions"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Periodtypeconversion"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Goalscontrolobjective -->
+    <set
+        name="goalscontrolobjectives"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Goalscontrolobjective"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Aorowner -->
+    <set
+        name="aorownersByAorowner"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="AOROWNER" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Aorowner"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Aorowner -->
+    <set
+        name="aorownersByLastupdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Aorowner"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Hierarchytype -->
+    <set
+        name="hierarchytypes"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Hierarchytype"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Control -->
+    <set
+        name="controls"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Control"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Controlrfc -->
+    <set
+        name="controlrfcs"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Controlrfc"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Policy -->
+    <set
+        name="policies"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Policy"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Rollingsignoff -->
+    <set
+        name="rollingsignoffs"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Rollingsignoff"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Controlobjective -->
+    <set
+        name="controlobjectives"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Controlobjective"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Executorpid -->
+    <set
+        name="executorpidsByEmployeeid"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="EMPLOYEEID" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executorpid"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Executorpid -->
+    <set
+        name="executorpidsByLastupdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executorpid"
+        />
+    </set>
+ 
+	 <!-- bi-directional one-to-many association to Reminder -->
+    <set
+        name="reminders"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Reminder"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Escalation -->
+    <set
+        name="escalations"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column ="LASTUPDATEDBY" />
+      
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Escalation"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Supportschema -->
+    <set
+        name="supportschemas"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Supportschema"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Attachmenttype -->
+    <set
+        name="attachmenttypes"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Attachmenttype"
+        />
+    </set>
+   <!-- bi-directional one-to-many association to Controlreference -->
+    <set
+        name="controlreferences"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Controlreference"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Multilink -->
+    <set
+        name="multilinks"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Multilink"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Designee -->
+    <set
+        name="designeesByDesignee"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column ="DESIGNEE" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Designee"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Designee -->
+    <set
+        name="designeesByLastupdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Designee"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Executoraor -->
+    <set
+        name="executoraors"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executoraor"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Scheduleadhocdate -->
+    <set
+        name="scheduleadhocdates"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Scheduleadhocdate"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Userprofile -->
+    <set
+        name="userprofilesByLastupdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Userprofile"
+        />
+    </set>        
+    <!-- bi-directional one-to-many association to Hierarchyrole -->
+    <set
+        name="hierarchyroles"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Hierarchyrole"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Controller -->
+    <set
+        name="controllers"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column ="CONTROLLER" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Controller"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Executionschema -->
+    <set
+        name="executionschemas"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column ="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executionschema"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Qaschema -->
+    <set
+        name="qaschemas"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Qaschema"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Goal -->
+    <set
+        name="goalsByLastupdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column ="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Goal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Goal -->
+    <set
+        name="goalsByGoalowner"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="GOALOWNER" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Goal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Goalspolicy -->
+    <set
+        name="goalspolicies"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Goalspolicy"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Rfc -->
+    <set
+        name="rfcs"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Rfc"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Schedulewhen -->
+    <set
+        name="schedulewhens"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column ="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Schedulewhen"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Executor -->
+    <set
+        name="executors"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column ="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executor"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Sharedcontrol -->
+    <set
+        name="sharedcontrols"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Sharedcontrol"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Hierarchy -->
+    <set
+        name="hierarchiesByLastupdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Hierarchy"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Hierarchy -->
+    <set
+        name="hierarchiesByHierarchyowner"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="HIERARCHYOWNER" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Hierarchy"
+        />
+    </set>
+    
+    <one-to-one name="userProfile"
+		class="com.csg.cs.micos.bean.Userprofile"
+		property-ref="employeeByEmployee"/>
+		
+		<!-- bi-directional one-to-many association to Employeeroleelement -->
+    <set
+        name="employeeroleelementsByLastupdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Employeeroleelement"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Employeeroleelement -->
+    <set
+        name="employeeroleelementsByEmployeeid"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="EMPLOYEEID" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Employeeroleelement"
+        />
+    </set>
+    
+ 	<!-- bi-directional one-to-many association to Hierarchyroleelement -->
+    <set
+        name="hierarchyroleelements"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Hierarchyroleelement"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to Executiontask -->
+    <set
+        name="executiontasksByExecutor"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="EXECUTOR" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executiontask"
+        />
+    </set>
+    
+     <!-- bi-directional one-to-many association to Executiontask -->
+    <set
+        name="signoffexecutiontasks"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="SIGNOFFEMPLOYEEID" />
+       
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Executiontask"
+        />
+    </set>
+	<!-- Added for micos 1.3 -->
+	
+	<set
+        name="elementTypesByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.CCElementType"
+        />
+    </set>
+	 
+	<set
+        name="FieldValuesByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.CCFieldValue"
+        />
+    </set>
+	
+	 <set
+        name="geoLocationsByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.CCGeoLocation"
+        />
+    </set>
+	 
+	<set
+        name="geoLocSectionsByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.CCGeoLocSection"
+        />
+    </set> 
+	
+	<set
+        name="controlColElementControlsByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlColElementControl"
+        />
+    </set>
+	
+	<set
+        name="controlCollectionsByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollection"
+        />
+    </set>
+	
+	
+	<set
+        name="controlCollectionAssignmentsByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollectionAssignment"
+        />
+    </set>
+	
+	<set
+        name="controlCollectionSectionsByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollectionSection"
+        />
+    </set>
+	
+	<set
+        name="controlCollectionReportsByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollectionReport"
+        />
+    </set>
+	
+	<set
+        name="controlCollectionCreators"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="CREATOR" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollection"
+        />
+    </set>
+	
+	<set
+        name="controlCollectionAssignmentEmployee"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="EMPLOYEEID" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollectionAssignment"
+        />
+    </set>
+    
+   
+	<set
+        name="controlCollectionFieldByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollectionField"
+        />
+    </set>
+     
+    <set
+        name="controlCollectionElementByLastUpdatedBy"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="LASTUPDATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollectionElement"
+        />
+    </set>
+    
+    <set
+        name="controlCollectionReportEmployee"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="GENERATEDBY" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlCollectionReport"
+        />
+    </set>
+     <!-- bi-directional one-to-many association to EmployeeLeaving -->
+     <set
+        name="employeLeavingUpdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.EmployeeLeaving"
+        />
+    </set>
+    <!-- bi-directional one-to-one association to EmployeeLeaving -->
+    <set
+        name="employeeLeaving"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="EMPLOYEEID" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.EmployeeLeaving"
+        />
+    </set>
+    
+     <!-- bi-directional one-to-many association to EmployeeReassignment-->
+     <set
+        name="employeeReassignmentUpdatedby"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.EmployeeReassignment"
+        />
+    </set>
+    
+     <!-- bi-directional one-to-one association to EmployeeReassignment -->
+    <set
+        name="employeeReassignment"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="ASSIGNEDTOEMPLOYEEID" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.EmployeeReassignment"
+        />
+    </set>
+   <!-- bi-directional one-to-many association to RemWarEscOtherRecipient -->
+    <set
+        name="remWarEscOtherRecipient"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.RemWarEscOtherRecipient"
+        />
+    </set> 
+	    <!-- bi-directional one-to-many association to RemWarEscOtherRecipient -->
+    <set
+        name="remWarEscOtherRecipientId"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="EMPLOYEEID" />
+        </key>
+        <one-to-many 
+            class="com.csg.cs.micos.bean.RemWarEscOtherRecipient"
+        />
+    </set> 
+	
+	<!-- bi-directional one-to-many association to ControlRemWarEsc -->
+    <set
+        name="controlRemWarEsc"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        
+        <one-to-many 
+            class="com.csg.cs.micos.bean.ControlRemWarEsc"
+        />
+    </set> 
+	
+	<!-- bi-directional one-to-many association to Referencecode --> 
+    <set
+        name="referenceCode"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Referencecode"
+        />
+    </set>
+	
+	<!-- bi-directional one-to-many association to Referencecodegroup --> 
+    <set
+        name="referenceCodeGroups"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key column="LASTUPDATEDBY" />
+        <one-to-many 
+            class="com.csg.cs.micos.bean.Referencecodegroup"
+        />
+    </set>
+</class>
+</hibernate-mapping>
